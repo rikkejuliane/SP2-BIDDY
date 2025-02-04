@@ -17,7 +17,7 @@
         <main>
             <div class="container flex justify-center items-center mx-auto mt-20" id="container">
                 <div class="form-container sign-up-container">
-                    <form action="#">
+                    <form id="register-form">
                         <h1 class="font-serif text-3xl font-bold">Create account</h1>
                         <label for="name-register" class="sr-only">Username</label>
                         <input
@@ -43,6 +43,7 @@
                             placeholder="Password"
                             class="mt-3 p-2 shadow-md rounded w-[200px] h-[30px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm"
                         >
+                        <div id="spinner-container" class="flex justify-center"></div>
                         <button id="sign-up-button" type="submit" class="mt-4 bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-[100px] h-[30px] flex items-center justify-center">Sign up</button>
                     </form>
                 </div>
