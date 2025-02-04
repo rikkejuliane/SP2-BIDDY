@@ -6,7 +6,6 @@
 
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
-
 /* Login and Register */
 form {
   background-color: #ffffff;
@@ -91,7 +90,7 @@ form {
 }
 
 .overlay {
-  background: #0017AD;
+  background: #0017ad;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -139,5 +138,3 @@ form {
 .container.right-panel-active .overlay-right {
   transform: translateX(20%);
 }
-
-
