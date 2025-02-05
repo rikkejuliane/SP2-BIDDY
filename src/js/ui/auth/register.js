@@ -17,7 +17,7 @@ export async function onRegister(event) {
     const email = form["email-register"].value.trim();
     const password = form["password-register"].value.trim();
     const button = form.querySelector("button");
-    const spinnerContainer = document.getElementById("spinner-container");
+    const spinnerContainer = document.getElementById("spinner-container-register");
     const spinner = createLoadingSpinner();
 
     button.disabled = true;

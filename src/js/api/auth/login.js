@@ -12,23 +12,18 @@ import { API_AUTH_LOGIN } from "../constants.js";
  * @throws {Error} If the login fails or the API returns an error response.
  */
 export async function login({ email, password }) {
-  try {
-    const response = await fetch(API_AUTH_LOGIN, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const json = await response.json();
-    if (!response.ok) {
-      throw new Error(
-        json.message || "Login failed. Please check your credentials."
-      );
-    }
-    return json;
-  } catch (error) {
-    console.error("Error in login:", error);
-    throw error;
+  const response = await fetch(API_AUTH_LOGIN, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const json = await response.json();
+  if (!response.ok) {
+    throw new Error(json.message || "Login failed. Please check your credentials.");
   }
+
+  return json;
 }

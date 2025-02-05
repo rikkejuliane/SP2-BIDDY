@@ -1,12 +1,18 @@
 /**
- * Creates and manages a loading spinner element.
+ * Creates and manages a reusable loading spinner element.
  *
+ * @param {string} [id] - Optional ID for the spinner.
  * @returns {HTMLElement} The spinner element.
  */
-export function createLoadingSpinner() {
+export function createLoadingSpinner(id = "") {
   const spinner = document.createElement("div");
-  spinner.className = "loading-spinner hidden";
+  spinner.className = "loading-spinner hidden flex justify-center items-center"; // ✅ Keep consistent styling
   spinner.setAttribute("role", "status");
+
+  if (id) {
+    spinner.id = id; // ✅ Allows setting a unique ID if needed
+  }
+
   spinner.innerHTML = `
     <svg
       aria-hidden="true"
@@ -26,5 +32,6 @@ export function createLoadingSpinner() {
     </svg>
     <span class="sr-only">Loading...</span>
   `;
+
   return spinner;
 }
