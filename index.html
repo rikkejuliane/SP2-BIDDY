@@ -1,20 +1,76 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noroff FED2 JS2 CA</title>
-  <script type="module" src="/src/app.js"></script>
-</head>
-
-<body>
-  <header>
-    <button id="logout-btn" type="submit" class="mt-4 bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-[100px] h-[30px] flex items-center justify-center">Logout</button>
-
-  </header>
-  <main></main>
-  <footer></footer>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Biddy | Discover & Bid on Exclusive Auctions</title>
+        <meta name="description" content="Join Biddy, the ultimate online auction platform. Discover, bid, and win exclusive items.">
+        <link rel="icon" type="image/x-icon" href="/public/images/favicon.ico">
+        <script type="module" src="/src/app.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="flex flex-row justify-between items-center mt-5 max-w-[90%] mx-auto">
+                <div class="flex flex-row items-center ">
+                    <a href="/"  class="shrink-0">
+                        <img src="/images/biddy-logo.png" alt="Biddy Logo" class="h-[70px]">
+                    </a>
+                    <form class="relative">
+                      <label for="search-input" class="sr-only">Search</label>
+                      <div class="relative">
+                          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-royal-blue" 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              fill="none" 
+                              viewBox="0 0 25 25" 
+                              stroke="currentColor" 
+                              stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" 
+                                  d="M11.4583 19.7917C16.0607 19.7917 19.7917 16.0607 19.7917 11.4583C19.7917 6.85596 16.0607 3.125 11.4583 3.125C6.85596 3.125 3.125 6.85596 3.125 11.4583C3.125 16.0607 6.85596 19.7917 11.4583 19.7917Z"/>
+                              <path stroke-linecap="round" stroke-linejoin="round" 
+                                  d="M21.8749 21.875L17.3958 17.3958"/>
+                          </svg>
+                          <input 
+                              class="p-2 pl-10 shadow-md rounded w-80 md:w-64 sm:w-48 h-[30px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm" 
+                              id="search-input" 
+                              type="text" 
+                              placeholder="Search..."
+                          >
+                      </div>
+                  </form>
+                </div>
+                <div>
+                    <nav class="flex items-center">
+                        <ul class="flex flex-row justify-center items-center gap-6 font-inter font-bold text-charcoal-grey whitespace-nowrap">
+                            <li id="user-credits">Your credit:</li>
+                            <li>
+                                <a href="/post/create/index.html">New listing</a>
+                            </li>
+                            <li>
+                                <a href="/profile/index.html">Profile</a>
+                            </li>
+                            <a>
+                                <button id="logout-btn" type="submit" class="bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-[100px] h-[30px] flex items-center justify-center">Logout</button>
+                            </a>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <main class="max-w-[90%] mx-auto">
+            <section class="flex flex-row items-center justify-center mt-9 gap-10">
+                <div>
+                    <h1 class="font-serif font-bold text-[54px] text-royal-blue leading-none">Welcome to Biddy:</h1>
+                    <h2 class="font-serif text-4xl">Exclusive Auctions for the </h2>
+                    <h2 class="font-serif text-4xl italic">Modern Collector</h2>
+                </div>
+                <div >
+                    <video autoplay loop muted playsinline class="w-[576px] h-[637px] object-cover">
+                        <source src="/public/images/biddy-car-header.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+                </div>
+            </section>
+        </main>
+        <footer></footer>
+    </body>
 </html>

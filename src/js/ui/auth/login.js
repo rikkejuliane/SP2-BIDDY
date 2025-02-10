@@ -48,7 +48,8 @@ export async function onLogin(event) {
         const apiResponse = await login({ email, password });
 
         localStorage.setItem("token", apiResponse.data.accessToken);
-        localStorage.setItem("username", apiResponse.data.name);
+        localStorage.setItem("username", apiResponse.data?.name || apiResponse.name);
+
 
         // **Show Success Modal & Redirect**
         showOverlayModal("Login successful!");
