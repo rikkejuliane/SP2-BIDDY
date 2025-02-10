@@ -11,8 +11,10 @@ import { onLogout } from "../auth/logout.js";
  */
 export async function setLogoutListener() {
   const logoutButton = document.querySelector("#logout-btn");
+  if (!logoutButton) return; // ✅ Exit early if button is missing
+
   logoutButton.addEventListener("click", () => {
-    onLogout()
-    window.location.href = "/auth/login/";
+    onLogout();
+    window.location.href = "/";
   });
 }

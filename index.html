@@ -11,7 +11,7 @@
     <body>
         <header>
             <div class="flex flex-row justify-between items-center mt-5 max-w-[90%] mx-auto">
-                <div class="flex flex-row items-center ">
+                <div class="flex flex-row items-center gap-8">
                     <a href="/" class="shrink-0">
                         <img src="/images/biddy-logo.png" alt="Biddy Logo" class="h-[70px]">
                     </a>
@@ -38,22 +38,7 @@
                         </div>
                     </form>
                 </div>
-                <div>
-                    <nav class="flex items-center">
-                        <ul class="flex flex-row justify-center items-center gap-6 font-inter font-bold text-charcoal-grey whitespace-nowrap">
-                            <li id="user-credits">Your credit:</li>
-                            <li>
-                                <a href="/post/create/index.html">New listing</a>
-                            </li>
-                            <li>
-                                <a href="/profile/index.html">Profile</a>
-                            </li>
-                            <a>
-                                <button id="logout-btn" type="submit" class="bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-[100px] h-[30px] flex items-center justify-center">Logout</button>
-                            </a>
-                        </ul>
-                    </nav>
-                </div>
+                <div id="navbar"></div>
             </div>
         </header>
         <main class="max-w-[90%] mx-auto">
@@ -157,7 +142,7 @@
                 </div>
                 <div>
                     <h3 class="font-serif font-bold text-lg">Stay connected</h3>
-                    <div class="flex flex-row">
+                    <div class="flex flex-row gap-4">
                         <svg
                             width="13"
                             height="25"
@@ -196,12 +181,24 @@
                             <path d="M0.690918 2.90404C0.690918 2.06227 0.985539 1.36783 1.57476 0.820707C2.16397 0.273561 2.92998 0 3.87274 0C4.79867 0 5.54781 0.269343 6.12021 0.808081C6.70943 1.36364 7.00405 2.08753 7.00405 2.9798C7.00405 3.78788 6.71786 4.46126 6.14546 5C5.55625 5.55556 4.78183 5.83333 3.82223 5.83333H3.79698C2.87104 5.83333 2.1219 5.55556 1.5495 5C0.977105 4.44444 0.690918 3.74578 0.690918 2.90404ZM1.0192 25V8.13131H6.62526V25H1.0192ZM9.73132 25H15.3374V15.5808C15.3374 14.9916 15.4047 14.537 15.5394 14.2172C15.7751 13.6448 16.1328 13.1608 16.6126 12.7652C17.0924 12.3695 17.6943 12.1717 18.4182 12.1717C20.3037 12.1717 21.2465 13.4428 21.2465 15.9848V25H26.8525V15.3283C26.8525 12.8367 26.2633 10.947 25.0849 9.65909C23.9064 8.37121 22.3492 7.72727 20.4131 7.72727C18.2414 7.72727 16.5495 8.66162 15.3374 10.5303V10.5808H15.3121L15.3374 10.5303V8.13131H9.73132C9.76498 8.67002 9.78183 10.3451 9.78183 13.1566C9.78183 15.968 9.76498 19.9158 9.73132 25Z" fill="black"/>
                         </svg>
                     </div>
+                    <p class="font-inter font-medium text-base">Newsletter</p>
+                    <form>
+                        <label for="newsletter"></label>
+                        <input
+                            class="rounded w-[200px] h-[30px] p-2 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm"
+                            id="newsletter"
+                            type="email"
+                            name="newsletter"
+                            placeholder="example@example.com"
+                            required
+                        >
+                        <button class="mt-1 bg-royal-blue text-white text-xs font-serif font-bold p-2 rounded w-[200px] h-[30px] flex items-center justify-center">Subscribe</button>
+                    </form>
                 </div>
             </div>
-            <div class="">
+            <div>
                 <hr class="border-t border-charcoal-grey opacity-25 rounded-full w-5/6 mx-auto mt-10">
                 <p class="font-inter font-medium text-base flex justify-center py-6">© 2025 Biddy. All rights reserved.</p>
-
             </div>
         </footer>
     </body>
