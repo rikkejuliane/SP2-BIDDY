@@ -8,12 +8,12 @@
         <link rel="icon" type="image/x-icon" href="/public/images/favicon.ico">
         <script type="module" src="/src/app.js"></script>
     </head>
-    <body>
+    <body class="bg-cloud-grey">
         <header>
             <div class="flex flex-row justify-between items-center mt-5 max-w-[90%] mx-auto">
                 <div class="flex flex-row items-center gap-8">
                     <a href="/" class="shrink-0">
-                        <img src="/images/biddy-logo.png" alt="Biddy Logo" class="h-[70px]">
+                        <img id="logo" src="/images/biddy-logo.png" alt="Biddy Logo" class="h-[70px]">
                     </a>
                     <form class="relative">
                         <label for="search-input" class="sr-only">Search</label>
@@ -30,7 +30,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.8749 21.875L17.3958 17.3958"/>
                             </svg>
                             <input
-                                class="p-2 pl-10 shadow-md rounded w-80 md:w-64 sm:w-48 h-[30px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm"
+                                class="p-2 pl-10 shadow-md rounded w-48 sm:w-72 md:w-64 lg:w-80 h-[30px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm"
                                 id="search-input"
                                 type="text"
                                 placeholder="Search..."
@@ -41,12 +41,13 @@
                 <div id="navbar"></div>
             </div>
         </header>
-        <main class="max-w-[90%] mx-auto">
-            <section class="flex flex-row items-center justify-center mt-9 gap-10">
-                <div>
-                    <h1 class="font-serif font-bold text-[54px] text-royal-blue leading-none">Welcome to Biddy:</h1>
-                    <h2 class="font-serif text-4xl">Exclusive Auctions for the</h2>
-                    <h2 class="font-serif text-4xl italic">Modern Collector</h2>
+        <main class="max-w-[90%] mx-auto mb-8">
+            <section class="flex flex-row flex-wrap md:flex-nowrap items-center justify-center mt-9 gap-2 md:gap-12">
+                <div class="max-w-[600px] whitespace-nowrap">
+                    <h1 class="font-serif font-bold text-3xl md:text-4xl lg:text-5xl text-royal-blue">Welcome to Biddy:</h1>
+                    <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl">Exclusive Auctions for the</h2>
+                    <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl italic">Modern Collector</h2>
+
                 </div>
                 <div>
                     <video
@@ -54,7 +55,7 @@
                         loop
                         muted
                         playsinline
-                        class="w-[576px] h-[637px] object-cover"
+                        class=" object-cover"
                     >
                         <source src="/public/images/biddy-car-header.mp4" type="video/mp4">
                         Your browser does not support the video tag.
@@ -63,7 +64,7 @@
             </section>
         </main>
         <footer class="bg-lavender-blue bg-opacity-50">
-            <div class="flex flex-row justify-center gap-[180px] pt-8">
+            <div class="flex flex-row flex-wrap justify-center gap-[180px] pt-8">
                 <div class="flex flex-col gap-1">
                     <h3 class="font-serif font-bold text-lg">About us</h3>
                     <ul class="font-inter text-base flex flex-col gap-1">
@@ -203,3 +204,4 @@
         </footer>
     </body>
 </html>
+

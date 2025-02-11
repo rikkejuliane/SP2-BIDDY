@@ -15,6 +15,11 @@ export default {
         "charcoal-grey": "#4E4E4E",
       },
     },
+    screens: {
+      'sm': "640px",
+      'md': '850px', 
+      'lg': '1020px'
+    },
   },
   plugins: [],
 };
