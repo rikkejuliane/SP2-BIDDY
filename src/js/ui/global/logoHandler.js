@@ -3,7 +3,7 @@ export function setupLogoSwap() {
   if (!logo) return;
 
   function swapLogo() {
-      if (window.innerWidth < 850) {
+      if (window.innerWidth < 950) {
           logo.src = "/images/biddy-small-logo.png"; // Small logo on mobile
       } else {
           logo.src = "/images/biddy-logo.png"; // Full logo on larger screens

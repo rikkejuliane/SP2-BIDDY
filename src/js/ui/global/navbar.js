@@ -53,6 +53,5 @@ export function updateNavbar() {
       setLogoutListener();
       setupHamburgerMenu(); // Initialize hamburger menu logic
   }
-  
 }
 

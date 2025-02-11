@@ -142,9 +142,9 @@
 
 /* Hamburger menu */
 #hamburgermeny {
-  width: 50px; /* Slightly smaller but keeps proportions */
+  width: 45px; /* Slightly smaller but keeps proportions */
   height: 35px; /* Adjusted height */
-  position: fixed;
+  position: absolute;
   top: 38px;
   right: 20px;
   z-index: 100; 

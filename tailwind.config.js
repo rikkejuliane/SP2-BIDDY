@@ -16,7 +16,8 @@ export default {
       },
     },
     screens: {
-      'md': '850px',  // Medium screens now start at 850px
+      'sm': "640px",
+      'md': '850px', 
       'lg': '1020px'
     },
   },
