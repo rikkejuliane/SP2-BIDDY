@@ -1,20 +1,16 @@
 import { onLogout } from "../auth/logout.js";
+
 /**
- * Attaches a logout event listener to the logout button.
- *
- * - Selects the logout button from the DOM.
- * - Attaches a click event listener that triggers the `onLogout` function.
- * - Redirects the user to the login page after logout.
- *
- * @throws {Error} If the logout button is not found in the DOM.
- * @returns {void}
+ * Attaches a logout event listener to all logout buttons.
  */
 export async function setLogoutListener() {
-  const logoutButton = document.querySelector("#logout-btn");
-  if (!logoutButton) return; // ✅ Exit early if button is missing
+  const logoutButtons = document.querySelectorAll("#logout-btn, #hamburger-logout-btn");
+  if (!logoutButtons.length) return; // ✅ Exit early if no buttons are found
 
-  logoutButton.addEventListener("click", () => {
-    onLogout();
-    window.location.href = "/";
+  logoutButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      onLogout();
+      window.location.href = "/";
+    });
   });
 }
