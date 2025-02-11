@@ -15,6 +15,10 @@ export default {
         "charcoal-grey": "#4E4E4E",
       },
     },
+    screens: {
+      'md': '850px',  // Medium screens now start at 850px
+      'lg': '1020px'
+    },
   },
   plugins: [],
 };
