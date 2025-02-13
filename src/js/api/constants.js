@@ -14,8 +14,9 @@ export const API_AUTH_KEY = `${API_AUTH}/create-api-key`;
 export const API_AUCTION = `${API_BASE}/auction`; // ✅ New base for auction-related routes
 export const API_USER_PROFILE = `${API_AUCTION}/profiles/`;
 
-// export const API_SOCIAL = `${API_BASE}/social`;
 
-// export const API_SOCIAL_POSTS = `${API_SOCIAL}/posts`;
-
-// export const API_SOCIAL_PROFILES = `${API_SOCIAL}/profiles`;
+export const API_LISTINGS = `${API_AUCTION}/listings`; // ✅ Fetch all listings
+export const API_LISTING_SEARCH = `${API_LISTINGS}/search?q=`; // ✅ Search listings
+export const API_LISTING_SINGLE = (id) => `${API_LISTINGS}/${id}`; // ✅ Fetch single listing
+export const API_LISTINGS_BY_TAG = (tag) => `${API_LISTINGS}?_tag=${tag}`; // ✅ Filter by tag
+export const API_LISTINGS_PAGINATED = (limit, page) => `${API_LISTINGS}?limit=${limit}&page=${page}`; // ✅ Pagination
