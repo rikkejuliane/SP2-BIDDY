@@ -16,8 +16,8 @@ export function updateNavbar() {
     if (isLoggedIn) {
         navbarHTML += `
             <li id="user-credits">Your credit: <span class="text-royal-blue">$0</span></li>
-            <li><a href="/post/create/index.html">New listing</a></li>
-            <li><a href="/profile/index.html">Profile</a></li>
+            <li><a href="/post/create/">New listing</a></li>
+            <li><a href="/profile/">Profile</a></li>
             <li>
                 <button id="logout-btn" class="bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-[100px] h-[30px] flex items-center justify-center">
                     Logout
