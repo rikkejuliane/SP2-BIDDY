@@ -21,9 +21,9 @@ export function setupHamburgerMenu() {
             <ul class="font-inter font-bold text-charcoal-grey text-lg space-y-4 pt-16">
                 <li id="hamburger-credits" class="flex justify-center items-center">Credits: <span class="text-royal-blue">$0</span></li>
                 <hr class="border-t border-charcoal-grey opacity-25 rounded-full w-5/6 mx-auto">
-                <li class="flex justify-center items-center"><a href="/post/create/index.html">New listing</a></li>
+                <li class="flex justify-center items-center"><a href="/post/create/">New listing</a></li>
                 <hr class="border-t border-charcoal-grey opacity-25 rounded-full w-5/6 mx-auto">
-                <li class="flex justify-center items-center"><a href="/profile/index.html">Profile</a></li>
+                <li class="flex justify-center items-center"><a href="/profile/">Profile</a></li>
                 <hr class="border-t border-charcoal-grey opacity-25 rounded-full w-5/6 mx-auto">
                 <li class="flex justify-center items-center"><button id="hamburger-logout-btn" class="bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-5/6">Logout</button></li>
             </ul>
