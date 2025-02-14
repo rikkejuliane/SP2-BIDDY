@@ -1,6 +1,6 @@
 import { API_AUCTION } from "../../api/constants.js";
 import { renderListingCard } from "../../api/post/renderListingCard.js";
-import { renderPagination } from "./pagination.js"; 
+import { renderPagination } from "./pagination.js";
 
 const ITEMS_PER_PAGE = 12;
 export let currentPage = 1;
@@ -12,26 +12,42 @@ export async function loadListings() {
   if (!container) return console.error("❌ Listings container not found!");
 
   try {
-    const response = await fetch(`${API_AUCTION}/listings?_bids=true&_seller=true`);
-    if (!response.ok) throw new Error("Failed to fetch listings");
+    let listings = [];
+    let page = 1;
+    let hasMore = true;
 
-    const result = await response.json();
-    let listings = result.data;
+    // ✅ Fetch ALL listings, handling API pagination
+    while (hasMore) {
+      const response = await fetch(`${API_AUCTION}/listings?_bids=true&_seller=true&limit=100&page=${page}`);
+      if (!response.ok) throw new Error("Failed to fetch listings");
 
-    if (!Array.isArray(listings)) {
-      throw new Error("API response is not an array.");
+      const result = await response.json();
+      if (!Array.isArray(result.data) || result.data.length === 0) break;
+
+      listings = [...listings, ...result.data];
+      page++;
+      hasMore = result.data.length === 100; // If API returns 100 items, assume more exist
     }
 
-    // ✅ Store all valid listings globally
-    allListings = listings.filter((listing) => {
-      if (!listing || typeof listing !== "object") return false;
-      return (
-        typeof listing.title === "string" && listing.title.trim().length >= 3 &&
-        Array.isArray(listing.media) && listing.media.length > 0 && listing.media[0]?.url &&
-        Array.isArray(listing.tags) && listing.tags.length > 0 &&
-        typeof listing.description === "string" && listing.description.trim().length > 0
-      );
-    });
+    if (listings.length === 0) throw new Error("No listings found.");
+
+    // ✅ Filter out broken posts (missing required data)
+    allListings = listings
+      .filter((listing) => {
+        return (
+          listing &&
+          typeof listing.title === "string" &&
+          listing.title.trim().length >= 3 &&
+          typeof listing.description === "string" &&
+          listing.description.trim().length > 0 &&
+          Array.isArray(listing.media) &&
+          listing.media.length > 0 &&
+          listing.media[0]?.url &&
+          Array.isArray(listing.tags) &&
+          listing.tags.length > 0
+        );
+      })
+      .sort((a, b) => new Date(b.created) - new Date(a.created)); // ✅ Sort by newest first
 
     totalPages = Math.ceil(allListings.length / ITEMS_PER_PAGE);
     currentPage = 1; // ✅ Reset to first page
@@ -43,7 +59,7 @@ export async function loadListings() {
   }
 }
 
-// ✅ Export renderPage() for search.js
+// ✅ Render the current page based on stored listings
 export function renderPage() {
   const container = document.getElementById("listings-container");
   if (!container) return;
