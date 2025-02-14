@@ -1,11 +1,13 @@
 import { API_AUCTION } from "../../api/constants.js";
 import { renderListingCard } from "../../api/post/renderListingCard.js";
 import { renderPagination } from "./pagination.js";
+import { initTagFiltering } from "./tagFilter.js";
 
 const ITEMS_PER_PAGE = 12;
 export let currentPage = 1;
 export let totalPages = 1;
-export let allListings = []; // ✅ Store all listings globally
+export let allListings = []; // Store all listings globally
+export let filteredListings = []; // Store filtered listings globally
 
 export async function loadListings() {
   const container = document.getElementById("listings-container");
@@ -16,7 +18,7 @@ export async function loadListings() {
     let page = 1;
     let hasMore = true;
 
-    // ✅ Fetch ALL listings, handling API pagination
+    // Fetch ALL listings, handling API pagination
     while (hasMore) {
       const response = await fetch(`${API_AUCTION}/listings?_bids=true&_seller=true&limit=100&page=${page}`);
       if (!response.ok) throw new Error("Failed to fetch listings");
@@ -31,7 +33,7 @@ export async function loadListings() {
 
     if (listings.length === 0) throw new Error("No listings found.");
 
-    // ✅ Filter out broken posts (missing required data)
+    // Filter out broken posts (missing required data)
     allListings = listings
       .filter((listing) => {
         return (
@@ -47,11 +49,17 @@ export async function loadListings() {
           listing.tags.length > 0
         );
       })
-      .sort((a, b) => new Date(b.created) - new Date(a.created)); // ✅ Sort by newest first
+      .sort((a, b) => new Date(b.created) - new Date(a.created)); // Sort by newest first
 
-    totalPages = Math.ceil(allListings.length / ITEMS_PER_PAGE);
-    currentPage = 1; // ✅ Reset to first page
-    renderPage(); // ✅ Load first page
+    // Default to showing all listings
+    filteredListings = [...allListings];
+    totalPages = Math.ceil(filteredListings.length / ITEMS_PER_PAGE);
+    currentPage = 1; // Reset to first page
+
+    renderPage(filteredListings); // Load first page with all listings
+
+    // Initialize tag filtering
+    initTagFiltering(allListings, updateFilteredListings, setCurrentPage);
 
   } catch (error) {
     console.error("❌ Error loading listings:", error);
@@ -59,8 +67,22 @@ export async function loadListings() {
   }
 }
 
-// ✅ Render the current page based on stored listings
-export function renderPage() {
+// ✅ Function to update filtered listings when selecting a tag
+export function updateFilteredListings(newListings) {
+  filteredListings = [...newListings]; // Update global filtered listings
+  totalPages = Math.ceil(filteredListings.length / ITEMS_PER_PAGE);
+  currentPage = 1; // Reset to first page
+  renderPage(filteredListings);
+}
+
+// ✅ Function to update the current page
+export function setCurrentPage(newPage) {
+  currentPage = newPage;
+  renderPage(filteredListings); // Ensure it only shows filtered listings
+}
+
+// ✅ Modified renderPage to always use filteredListings
+export function renderPage(listingsToShow) {
   const container = document.getElementById("listings-container");
   if (!container) return;
 
@@ -68,19 +90,24 @@ export function renderPage() {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const listingsToShow = allListings.slice(startIndex, endIndex);
+  const listingsToDisplay = listingsToShow.slice(startIndex, endIndex);
 
-  if (listingsToShow.length === 0) {
+  if (listingsToDisplay.length === 0) {
     container.innerHTML = `<p class="text-center text-gray-500">No valid listings available.</p>`;
   } else {
-    listingsToShow.forEach((listing) => {
+    listingsToDisplay.forEach((listing) => {
       container.appendChild(renderListingCard(listing, Boolean(localStorage.getItem("token"))));
     });
   }
 
-  // ✅ Call pagination
+  // ✅ Now pagination listens to filteredListings instead of allListings
   renderPagination(currentPage, totalPages, (newPage) => {
-    currentPage = newPage;
-    renderPage();
+    setCurrentPage(newPage);
   });
+
+  // ✅ Update total listings count dynamically
+  const totalListingsElement = document.getElementById("total-listings-count");
+  if (totalListingsElement) {
+    totalListingsElement.textContent = filteredListings.length; // Correct count after filtering
+  }
 }
