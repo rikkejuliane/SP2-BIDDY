@@ -17,20 +17,21 @@ export function setupSearch() {
   searchInput.addEventListener("input", async (event) => {
     const query = event.target.value.trim();
 
-    // ✅ If search is cleared, fully restore hero section & reset listings
+    // ✅ If search is cleared, restore hero section & reset listings
     if (query.length === 0) {
-      heroSection.classList.remove("hidden", "opacity-0"); // 🚀 Fully restore instantly
+      heroSection.classList.remove("hidden");
+      setTimeout(() => {
+        heroSection.classList.remove("opacity-0");
+      }, 10); // Small delay to prevent flickering
       loadListings(); // ✅ Reload full listings
       return;
     }
 
     // ✅ Hide hero section when searching
-    if (!heroSection.classList.contains("hidden")) {
-      heroSection.classList.add("opacity-0");
-      setTimeout(() => {
-        heroSection.classList.add("hidden");
-      }, 300); // ⏳ Fade out over 0.3s
-    }
+    heroSection.classList.add("opacity-0");
+    setTimeout(() => {
+      heroSection.classList.add("hidden");
+    }, 300); // ⏳ Fade out over 0.3s
 
     try {
       console.log(`🔍 Searching for: ${query}`);

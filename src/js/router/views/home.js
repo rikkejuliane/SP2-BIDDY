@@ -6,7 +6,6 @@ import { setupLogoSwap } from "../../ui/global/logoHandler.js";
 import { loadListings } from "../../ui/post/loadListings.js";
 import { setupSearch } from "../../ui/post/search.js";
 import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js";
-import { setupTagFilters } from "../../ui/post/tagFilter.js"; 
 
 
 
@@ -39,4 +38,4 @@ if (listingsContainer) {
 
 // ✅ Initialize search AFTER the listings are loaded
 setupSearch();
-setupTagFilters()
+
