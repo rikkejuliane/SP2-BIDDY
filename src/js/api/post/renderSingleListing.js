@@ -149,10 +149,10 @@ export function renderSingleListing(listing, isLoggedIn) {
   // ✅ Bid Input Section
   const bidSection = document.createElement("div");
   bidSection.className = "w-[95%] p-3 flex justify-center flex-col mx-auto";
-
+  
   const hrBottom = document.createElement("hr");
   hrBottom.className = "my-2 border-gray-300";
-
+  
   const bidInputWrapper = document.createElement("div");
   bidInputWrapper.className = "flex items-center justify-center";
   
@@ -167,11 +167,26 @@ export function renderSingleListing(listing, isLoggedIn) {
   
   if (isLoggedIn) {
     bidButton.textContent = "Place Bid";
-    // TODO: Add event listener to submit bid
+    bidButton.addEventListener("click", async () => {
+      const bidAmount = parseFloat(bidInput.value); // Get the bid amount from the input
+  
+      if (isNaN(bidAmount) || bidAmount <= 0) {
+        alert("Please enter a valid bid amount."); // Validate the bid amount
+        return;
+      }
+  
+      try {
+        await placeBid(id, bidAmount); // Call the placeBid function with the listing ID and bid amount
+        alert("Bid placed successfully!"); // Notify the user of success
+        // Optionally, refresh the listing or update the UI to reflect the new bid
+      } catch (error) {
+        alert("Failed to place bid: " + error.message); // Notify the user of the error
+      }
+    });
   } else {
     bidButton.textContent = "Login to Bid";
     bidButton.addEventListener("click", () => {
-      window.location.href = "/auth/"; // ✅ Redirects to login page
+      window.location.href = "/auth/"; // Redirects to login page
     });
   }
   

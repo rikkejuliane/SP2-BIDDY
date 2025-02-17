@@ -1,55 +1,28 @@
-import { API_BID_ON_LISTING } from "../../api/constants.js";
+// placeBid.js
+import { API_BID_ON_LISTING } from '../constants.js'; // Import the API endpoint constant
+import { headers } from '../headers.js'; // Import the headers function
 
-/**
- * Handles placing a bid on a listing.
- * @param {string} listingId - The ID of the listing
- * @param {HTMLElement} bidInput - The input field for the bid
- * @param {HTMLElement} bidButton - The button for submitting a bid
- * @param {Function} updateBidHistory - Function to update the UI bid history
- */
-export async function placeBid(listingId, bidInput, bidButton, updateBidHistory) {
-  const bidAmount = parseFloat(bidInput.value);
-
-  // Validate input
-  if (isNaN(bidAmount) || bidAmount <= 0) {
-    alert("⚠️ Please enter a valid bid amount.");
-    return;
-  }
-
-  // Disable the button while submitting
-  bidButton.disabled = true;
-  bidButton.textContent = "Placing Bid...";
-
+export async function placeBid(listingId, bidAmount) {
   try {
-    // Send bid request to API
+    // Make the API request to place a bid
     const response = await fetch(API_BID_ON_LISTING(listingId), {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure user is logged in
-      },
-      body: JSON.stringify({ amount: bidAmount }),
+      headers: headers(), // Call the headers function to get the necessary headers
+      body: JSON.stringify({ amount: bidAmount }), // Send the bid amount in the request body
     });
 
-    if (!response.ok) throw new Error("Failed to place bid. Try again!");
+    // Check if the response is not OK
+    if (!response.ok) {
+      const errorData = await response.json(); // Get the error response
+      console.log("API Response:", errorData); // Log the response for debugging
+      throw new Error(errorData.message || "Failed to place bid."); // Use the error message from the API if available
+    }
 
+    // Parse the response data
     const result = await response.json();
-    console.log("✅ Bid placed successfully:", result);
-
-    // Success message
-    alert("🎉 Your bid has been placed successfully!");
-
-    // Update bid history UI
-    updateBidHistory({ amount: bidAmount, bidder: { name: "You", avatar: "/images/default-avatar.png" } });
-
-    // Clear input field
-    bidInput.value = "";
-
+    return result.data; // Return the bid data
   } catch (error) {
-    console.error("❌ Error placing bid:", error);
-    alert("⚠️ Unable to place bid. Please try again.");
-  } finally {
-    bidButton.disabled = false;
-    bidButton.textContent = "Place Bid";
+    console.error("Error placing bid:", error);
+    throw error; // Rethrow the error for handling in the calling function
   }
 }
