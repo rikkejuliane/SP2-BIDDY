@@ -71,7 +71,7 @@ export function showActionModal(message, buttons = []) {
   buttons.forEach(({ text, onClick, className }) => {
       const button = document.createElement("button");
       button.textContent = text;
-      button.className = className || "bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-[100px] h-[30px]";
+      button.className = className || "bg-royal-blue text-white text-lg font-serif font-bold px-2 py-1 rounded w-[100px] h-[30px] items-center";
       button.addEventListener("click", () => {
           if (onClick) onClick();
           modalOverlay.remove(); // Close modal after button click

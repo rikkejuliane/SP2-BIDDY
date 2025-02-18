@@ -12,9 +12,23 @@ export function renderListingCard(listing, isLoggedIn) {
     seller = {},
   } = listing;
 
-  // Create elements
   const card = document.createElement("div");
-  card.className = "w-[350px] h-[515px] bg-white rounded-2xl shadow-lg overflow-hidden";
+  card.className = "w-[350px] h-[515px] bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer";
+
+  // Check if the listing has expired
+  const currentDate = new Date();
+  const listingEndDate = new Date(endsAt); // Assuming endsAt is in a valid date format
+
+  if (currentDate > listingEndDate) {
+    // The listing has expired, apply opacity
+    card.style.opacity = "0.5"; // Set opacity to 50%
+    card.style.pointerEvents = "none"; // Optional: Disable interactions
+  }
+
+  // Function to navigate to single listing page
+  function goToListingPage() {
+    window.location.href = `/post/?id=${id}`;
+  }
 
   // User Info
   const userInfo = document.createElement("div");
@@ -36,7 +50,8 @@ export function renderListingCard(listing, isLoggedIn) {
   const listingImage = document.createElement("img");
   listingImage.src = media?.[0]?.url || "/images/placeholder.png";
   listingImage.alt = title;
-  listingImage.className = "w-[350px] h-[256px] object-cover";
+  listingImage.className = "w-[350px] h-[256px] object-cover cursor-pointer";
+  listingImage.addEventListener("click", goToListingPage); // ✅ Click event
 
   // Tags & End Date
   const tagBar = document.createElement("div");
@@ -45,7 +60,6 @@ export function renderListingCard(listing, isLoggedIn) {
   const tagSpan = document.createElement("span");
   tagSpan.className = "italic font-inter";
   tagSpan.textContent = tags.length > 0 ? tags[0] : "No tags";
-
 
   const endDate = document.createElement("span");
   endDate.className = "font-semibold font-inter";
@@ -59,8 +73,9 @@ export function renderListingCard(listing, isLoggedIn) {
   details.className = "w-[95%] p-2 flex justify-center flex-col mx-auto";
 
   const titleElement = document.createElement("h3");
-  titleElement.className = "font-bold text-lg w-[326px] truncate font-serif";
+  titleElement.className = "font-bold text-lg w-[326px] truncate font-serif cursor-pointer";
   titleElement.textContent = title;
+  titleElement.addEventListener("click", goToListingPage); // ✅ Click event
 
   const descriptionElement = document.createElement("p");
   descriptionElement.className = "text-sm truncate pb-1";
@@ -94,7 +109,16 @@ export function renderListingCard(listing, isLoggedIn) {
 
   const bidButton = document.createElement("button");
   bidButton.className = "bg-royal-blue text-white font-serif font-bold text-base px-3 py-1 rounded";
-  bidButton.textContent = isLoggedIn ? "Place Bid" : "Login to Bid";
+
+  if (isLoggedIn) {
+    bidButton.textContent = "Place Bid";
+    bidButton.addEventListener("click", goToListingPage); // ✅ Takes user to listing
+  } else {
+    bidButton.textContent = "Login to Bid";
+    bidButton.addEventListener("click", () => {
+      window.location.href = "/auth/"; // ✅ Redirects to login page
+    });
+  }
 
   bidSection.appendChild(hr);
   bidInfo.appendChild(highestBid);
@@ -110,5 +134,5 @@ export function renderListingCard(listing, isLoggedIn) {
   card.appendChild(details);
   card.appendChild(bidSection);
 
-  return card; // Return the fully constructed card element
+  return card;
 }
