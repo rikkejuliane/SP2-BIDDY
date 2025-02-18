@@ -1,4 +1,5 @@
 import { handleBidPlacement } from "./placeBid";
+import { showActionModal, showOverlayModal } from "../../ui/global/modal";
 
 export function renderSingleListing(listing, isLoggedIn) {
   const {
@@ -167,21 +168,38 @@ export function renderSingleListing(listing, isLoggedIn) {
    const bidButton = document.createElement("button");
    bidButton.className = "h-[36px] bg-royal-blue text-white font-serif font-bold text-base px-4 rounded flex items-center";
    
+
+   const user = localStorage.getItem("username");
+   const highestBidder =
+     bids.length > 0
+       ? bids.reduce((maxBid, bid) => (bid.amount > maxBid.amount ? bid : maxBid), bids[0]).bidder.name
+       : "No bids";
+   
+   console.log("Highest Bidder:", highestBidder);
+   console.log("Current User:", user);
+   
    if (isLoggedIn) {
      bidButton.textContent = "Place Bid";
      bidButton.addEventListener("click", async () => {
+       if (highestBidder === user) {
+         showActionModal("You cannot place two bids in a row.", [
+           { text: "OK", onClick: () => {} }, // No additional action
+         ]);
+         console.log("User is the highest bidder. Blocking bid.");
+         return;
+       }
+   
        const bidAmount = parseFloat(bidInput.value); // Get the bid amount from the input
- 
-       // Call the new handleBidPlacement function
+   
+       // Call the new handleBidPlacement function only if allowed
        await handleBidPlacement(
-        listing.id,
+         listing.id,
          bidAmount,
          bidInput,
          () => {
-           // Success callback: Optionally refresh the listing or update the UI to reflect the new bid
+           // Success callback: Optionally refresh the listing or update the UI
          },
          (error) => {
-           // Error callback: Handle any additional error logic if needed
            console.error(error);
          }
        );
@@ -192,6 +210,7 @@ export function renderSingleListing(listing, isLoggedIn) {
        window.location.href = "/auth/"; // Redirects to login page
      });
    }
+   
    
    bidInputWrapper.appendChild(bidInput);
    bidInputWrapper.appendChild(bidButton);
