@@ -15,6 +15,16 @@ export function renderListingCard(listing, isLoggedIn) {
   const card = document.createElement("div");
   card.className = "w-[350px] h-[515px] bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer";
 
+  // Check if the listing has expired
+  const currentDate = new Date();
+  const listingEndDate = new Date(endsAt); // Assuming endsAt is in a valid date format
+
+  if (currentDate > listingEndDate) {
+    // The listing has expired, apply opacity
+    card.style.opacity = "0.5"; // Set opacity to 50%
+    card.style.pointerEvents = "none"; // Optional: Disable interactions
+  }
+
   // Function to navigate to single listing page
   function goToListingPage() {
     window.location.href = `/post/?id=${id}`;
@@ -98,17 +108,17 @@ export function renderListingCard(listing, isLoggedIn) {
   highestBid.textContent = `Highest bid: $${bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0}`;
 
   const bidButton = document.createElement("button");
-bidButton.className = "bg-royal-blue text-white font-serif font-bold text-base px-3 py-1 rounded";
+  bidButton.className = "bg-royal-blue text-white font-serif font-bold text-base px-3 py-1 rounded";
 
-if (isLoggedIn) {
-  bidButton.textContent = "Place Bid";
-  bidButton.addEventListener("click", goToListingPage); // ✅ Takes user to listing
-} else {
-  bidButton.textContent = "Login to Bid";
-  bidButton.addEventListener("click", () => {
-    window.location.href = "/auth/"; // ✅ Redirects to login page
-  });
-}
+  if (isLoggedIn) {
+    bidButton.textContent = "Place Bid";
+    bidButton.addEventListener("click", goToListingPage); // ✅ Takes user to listing
+  } else {
+    bidButton.textContent = "Login to Bid";
+    bidButton.addEventListener("click", () => {
+      window.location.href = "/auth/"; // ✅ Redirects to login page
+    });
+  }
 
   bidSection.appendChild(hr);
   bidInfo.appendChild(highestBid);

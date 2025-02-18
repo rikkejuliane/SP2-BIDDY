@@ -1,5 +1,4 @@
-export const API_KEY = "c8279e85-ba08-4a23-a185-0b3f2f88c4dd";
-
+export const API_KEY = import.meta.env.VITE_API_KEY;
 export const API_BASE = "https://v2.api.noroff.dev";
 
 export const API_AUTH = `${API_BASE}/auth`;

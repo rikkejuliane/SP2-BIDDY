@@ -1,3 +1,5 @@
+import { handleBidPlacement } from "./placeBid";
+
 export function renderSingleListing(listing, isLoggedIn) {
   const {
     id,
@@ -146,64 +148,65 @@ export function renderSingleListing(listing, isLoggedIn) {
     bidHistorySection.appendChild(noBidsMessage);
   }
 
-  // ✅ Bid Input Section
-  const bidSection = document.createElement("div");
-  bidSection.className = "w-[95%] p-3 flex justify-center flex-col mx-auto";
-  
-  const hrBottom = document.createElement("hr");
-  hrBottom.className = "my-2 border-gray-300";
-  
-  const bidInputWrapper = document.createElement("div");
-  bidInputWrapper.className = "flex items-center justify-center";
-  
-  const bidInput = document.createElement("input");
-  bidInput.type = "number";
-  bidInput.min = "1";
-  bidInput.className = "p-2 shadow-md rounded w-[200px] h-[36px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
-  bidInput.placeholder = "Place your bid here...";
-  
-  const bidButton = document.createElement("button");
-  bidButton.className = "h-[36px] bg-royal-blue text-white font-serif font-bold text-base px-4 rounded flex items-center";
-  
-  if (isLoggedIn) {
-    bidButton.textContent = "Place Bid";
-    bidButton.addEventListener("click", async () => {
-      const bidAmount = parseFloat(bidInput.value); // Get the bid amount from the input
-  
-      if (isNaN(bidAmount) || bidAmount <= 0) {
-        alert("Please enter a valid bid amount."); // Validate the bid amount
-        return;
-      }
-  
-      try {
-        await placeBid(id, bidAmount); // Call the placeBid function with the listing ID and bid amount
-        alert("Bid placed successfully!"); // Notify the user of success
-        // Optionally, refresh the listing or update the UI to reflect the new bid
-      } catch (error) {
-        alert("Failed to place bid: " + error.message); // Notify the user of the error
-      }
-    });
-  } else {
-    bidButton.textContent = "Login to Bid";
-    bidButton.addEventListener("click", () => {
-      window.location.href = "/auth/"; // Redirects to login page
-    });
-  }
-  
-  bidInputWrapper.appendChild(bidInput);
-  bidInputWrapper.appendChild(bidButton);
-
-  bidSection.appendChild(hrBottom);
-  bidSection.appendChild(bidInputWrapper);
-
-  // ✅ Append all elements to card
-  card.appendChild(userInfo);
-  card.appendChild(listingImage);
-  card.appendChild(tagBar);
-  card.appendChild(details);
-  card.appendChild(bidSummarySection);
-  card.appendChild(bidHistorySection);
-  card.appendChild(bidSection);
-
-  return card;
-}
+   // ✅ Bid Input Section
+   const bidSection = document.createElement("div");
+   bidSection.className = "w-[95%] p-3 flex justify-center flex-col mx-auto";
+   
+   const hrBottom = document.createElement("hr");
+   hrBottom.className = "my-2 border-gray-300";
+   
+   const bidInputWrapper = document.createElement("div");
+   bidInputWrapper.className = "flex items-center justify-center";
+   
+   const bidInput = document.createElement("input");
+   bidInput.type = "number";
+   bidInput.min = "1";
+   bidInput.className = "p-2 shadow-md rounded w-[200px] h-[36px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
+   bidInput.placeholder = "Place your bid here...";
+   
+   const bidButton = document.createElement("button");
+   bidButton.className = "h-[36px] bg-royal-blue text-white font-serif font-bold text-base px-4 rounded flex items-center";
+   
+   if (isLoggedIn) {
+     bidButton.textContent = "Place Bid";
+     bidButton.addEventListener("click", async () => {
+       const bidAmount = parseFloat(bidInput.value); // Get the bid amount from the input
+ 
+       // Call the new handleBidPlacement function
+       await handleBidPlacement(
+         id,
+         bidAmount,
+         bidInput,
+         () => {
+           // Success callback: Optionally refresh the listing or update the UI to reflect the new bid
+         },
+         (error) => {
+           // Error callback: Handle any additional error logic if needed
+           console.error(error);
+         }
+       );
+     });
+   } else {
+     bidButton.textContent = "Login to Bid";
+     bidButton.addEventListener("click", () => {
+       window.location.href = "/auth/"; // Redirects to login page
+     });
+   }
+   
+   bidInputWrapper.appendChild(bidInput);
+   bidInputWrapper.appendChild(bidButton);
+ 
+   bidSection.appendChild(hrBottom);
+   bidSection.appendChild(bidInputWrapper);
+ 
+   // ✅ Append all elements to card
+   card.appendChild(userInfo);
+   card.appendChild(listingImage);
+   card.appendChild(tagBar);
+   card.appendChild(details);
+   card.appendChild(bidSummarySection);
+   card.appendChild(bidHistorySection);
+   card.appendChild(bidSection);
+ 
+   return card;
+ }
