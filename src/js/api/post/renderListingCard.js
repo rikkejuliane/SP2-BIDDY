@@ -30,9 +30,20 @@ export function renderListingCard(listing, isLoggedIn) {
     window.location.href = `/post/?id=${id}`;
   }
 
-  // User Info
-  const userInfo = document.createElement("div");
-  userInfo.className = "flex items-center gap-2 p-3";
+  // Function to navigate to user profile
+function goToUserProfile() {
+  const loggedInUsername = localStorage.getItem("username");
+  if (seller.name === loggedInUsername) {
+    window.location.href = "/profile/"; // ✅ Navigate to own profile
+  } else {
+    window.location.href = `/profile/?user=${seller.name}`; // ✅ Navigate to other user's profile
+  }
+}
+
+// User Info
+const userInfo = document.createElement("div");
+userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
+userInfo.addEventListener("click", goToUserProfile);
 
   const avatar = document.createElement("img");
   avatar.src = seller?.avatar?.url || "/images/default-avatar.png";
