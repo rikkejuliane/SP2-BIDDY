@@ -174,7 +174,7 @@ export function renderSingleListing(listing, isLoggedIn) {
  
        // Call the new handleBidPlacement function
        await handleBidPlacement(
-         id,
+        listing.id,
          bidAmount,
          bidInput,
          () => {
@@ -195,7 +195,6 @@ export function renderSingleListing(listing, isLoggedIn) {
    
    bidInputWrapper.appendChild(bidInput);
    bidInputWrapper.appendChild(bidButton);
- 
    bidSection.appendChild(hrBottom);
    bidSection.appendChild(bidInputWrapper);
  

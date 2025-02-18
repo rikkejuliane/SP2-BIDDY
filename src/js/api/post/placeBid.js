@@ -54,6 +54,11 @@ export async function handleBidPlacement(listingId, bidAmount) {
     if (error.errors && error.errors.length > 0) {
       errorMessage = error.errors[0].message; // Get the first error message
     }
-    showOverlayModal("Failed to place bid: " + errorMessage); // Use modal to notify the user of the error
+    showActionModal("Failed to place bid: " + errorMessage, [ // Use action modal for error with an OK button
+      {
+        text: "OK",
+        onClick: () => {} // No additional action needed
+      }
+    ]);
   }
 }
