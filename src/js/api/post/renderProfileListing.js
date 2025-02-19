@@ -7,7 +7,7 @@ export function renderProfileListingCard(listing, isLoggedIn) {
     media = [],
     created,
     endsAt,
-    _count = {},
+    _count,
     bids = [],
     seller = {},
   } = listing;
@@ -38,22 +38,22 @@ export function renderProfileListingCard(listing, isLoggedIn) {
     }
   }
 
-   // ✅ User Info (Avatar + Username)
-   const userInfo = document.createElement("div");
-   userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
-   userInfo.addEventListener("click", goToUserProfile);
- 
-   const avatar = document.createElement("img");
-   avatar.src = seller.avatar?.url || "/images/default-avatar.png"; // ✅ Fix Avatar
-   avatar.alt = `${seller?.name || "Unknown"}'s avatar`;
-   avatar.className = "w-10 h-10 rounded-full object-cover";
- 
-   const username = document.createElement("span");
-   username.className = "font-bold";
-   username.textContent = seller?.name || "Unknown"; // ✅ Fix Username
-   
-   userInfo.appendChild(avatar);
-   userInfo.appendChild(username);
+  // ✅ User Info (Avatar + Username)
+  const userInfo = document.createElement("div");
+  userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
+  userInfo.addEventListener("click", goToUserProfile);
+
+  const avatar = document.createElement("img");
+  avatar.src = seller.avatar?.url || "/images/default-avatar.png"; // ✅ Fix Avatar
+  avatar.alt = `${seller?.name || "Unknown"}'s avatar`;
+  avatar.className = "w-10 h-10 rounded-full object-cover";
+
+  const username = document.createElement("span");
+  username.className = "font-bold";
+  username.textContent = seller?.name || "Unknown"; // ✅ Fix Username
+
+  userInfo.appendChild(avatar);
+  userInfo.appendChild(username);
 
   // ✅ Listing Image
   const listingImage = document.createElement("img");
@@ -106,15 +106,15 @@ export function renderProfileListingCard(listing, isLoggedIn) {
   hr.className = "pb-1 border-gray-300";
 
   const totalBids = document.createElement("p");
-totalBids.className = "text-sm";
-totalBids.textContent = `Total bids: ${listing.totalBids || 0}`;
+  totalBids.className = "text-sm";
+  totalBids.textContent = `Total bids: ${_count?.bids || 0}`;
 
   const bidInfo = document.createElement("div");
   bidInfo.className = "flex justify-between items-center";
 
   const highestBid = document.createElement("span");
-highestBid.className = "text-royal-blue font-bold";
-highestBid.textContent = `Highest bid: $${listing.highestBid || 0}`;
+  highestBid.className = "text-royal-blue font-bold";
+  highestBid.textContent = `Highest bid: $${bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0}`;
 
   const bidButton = document.createElement("button");
   bidButton.className = "bg-royal-blue text-white font-serif font-bold text-base px-3 py-1 rounded";
