@@ -15,8 +15,8 @@ export async function readProfile(username) {
   console.log("🔍 Fetching profile for:", username);
 
   try {
-    // ✅ Fetch Profile Data (including listings and wins)
-    const response = await fetch(`${API_USER_PROFILE}${username}?_listings=true&_wins=true`, {
+    // ✅ Fetch Profile Data (including listings, wins & seller info)
+    const response = await fetch(`${API_USER_PROFILE}${username}?_listings=true&_wins=true&_seller=true`, {
       method: "GET",
       headers: headers(),
     });
@@ -26,9 +26,9 @@ export async function readProfile(username) {
     const result = await response.json();
     console.log("📦 API Response Data:", result); // ✅ Log full profile response
 
-    // ✅ Fetch Bids Separately
+    // ✅ Fetch Bids Separately (Ensure it includes `_listings` & `_seller`)
     let bidsData = [];
-    const bidsUrl = API_PROFILE_BIDS(username);
+    const bidsUrl = `${API_PROFILE_BIDS(username)}?_listings=true&_seller=true`;
     console.log("🔗 Fetching bids from:", bidsUrl); // ✅ Check if URL is correct
 
     try {

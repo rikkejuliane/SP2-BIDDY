@@ -21,14 +21,12 @@ export async function loadProfileListings() {
   const listings = profileData.listings || [];
   const wins = profileData.wins || [];
 
-  // ✅ Fetch Bids Separately
+  // ✅ Fetch Bids Separately (Make sure `_seller=true` is included)
   let bids = [];
   try {
-    const response = await fetch(API_PROFILE_BIDS(profileUsername) + "?_listings=true&_seller=true", {
+    const response = await fetch(`${API_PROFILE_BIDS(profileUsername)}?_listings=true&_seller=true`, {
       headers: headers(),
     });
-    
-    
 
     if (!response.ok) throw new Error("Failed to fetch user bids");
     const result = await response.json();
@@ -40,15 +38,14 @@ export async function loadProfileListings() {
 
   // ✅ Extract bid listings and attach highest bid amount
   const bidListings = bids
-  .filter(bid => bid.listing && bid.listing.id) // ✅ Ensure valid listings
-  .map(bid => ({
-    ...bid.listing, 
-    highestBid: bid.amount, // ✅ Attach highest bid
-    bidderName: bid.bidder?.name || "Unknown Bidder", // ✅ Include bidder info
-    totalBids: bid.listing?._count?.bids || 0, // ✅ Attach total bids
-    seller: bid.listing?.seller || {}, // ✅ Ensure seller info is attached
-  }));
-
+    .filter(bid => bid.listing && bid.listing.id) // ✅ Ensure valid listings
+    .map(bid => ({
+      ...bid.listing, 
+      highestBid: bid.amount, // ✅ Attach highest bid
+      bidderName: bid.bidder?.name || "Unknown Bidder", // ✅ Include bidder info
+      totalBids: bid.listing?._count?.bids || 0, // ✅ Attach total bids
+      seller: bid.listing?.seller || {}, // ✅ Ensure seller info is attached
+    }));
 
   console.log("🎯 Processed Bid Listings:", bidListings);
 
@@ -62,7 +59,6 @@ export async function loadProfileListings() {
   showEmptyStateMessage(wins, "wins-container", "You have no wins yet.");
   showEmptyStateMessage(bidListings, "bids-container", "You haven't placed any bids yet.");
 }
-
 
 function renderPaginatedListings(items, containerId, paginationId) {
   const container = document.getElementById(containerId);
