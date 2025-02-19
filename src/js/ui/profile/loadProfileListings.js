@@ -1,5 +1,5 @@
 import { readProfile } from "../../api/profile/read.js";
-import { API_PROFILE_BIDS } from "../../api/constants.js";
+import { API_USER_PROFILE, API_PROFILE_BIDS } from "../../api/constants.js";
 import { headers } from "../../api/headers.js"; 
 import { renderProfileListingCard } from "../../api/post/renderProfileListing.js"; 
 
@@ -17,11 +17,37 @@ export async function loadProfileListings() {
 
   console.log("📦 Profile Data:", profileData);
 
-  // ✅ Ensure arrays exist
-  const listings = profileData.listings || [];
-  const wins = profileData.wins || [];
+  // ✅ Fetch Listings (Ensure `_seller=true&_bids=true`)
+  let listings = [];
+  try {
+    const response = await fetch(`${API_USER_PROFILE}${profileUsername}/listings?_seller=true&_bids=true`, {
+      headers: headers(),
+    });
 
-  // ✅ Fetch Bids Separately (Make sure `_seller=true` is included)
+    if (!response.ok) throw new Error("Failed to fetch profile listings");
+    const result = await response.json();
+    listings = result.data || [];
+    console.log("🛍️ User Listings Data:", listings);
+  } catch (error) {
+    console.error("⚠️ Error fetching profile listings:", error);
+  }
+
+  // ✅ Fetch Wins (Ensure `_seller=true&_bids=true`)
+  let wins = [];
+  try {
+    const response = await fetch(`${API_USER_PROFILE}${profileUsername}/wins?_seller=true&_bids=true`, {
+      headers: headers(),
+    });
+
+    if (!response.ok) throw new Error("Failed to fetch profile wins");
+    const result = await response.json();
+    wins = result.data || [];
+    console.log("🏆 User Wins Data:", wins);
+  } catch (error) {
+    console.error("⚠️ Error fetching profile wins:", error);
+  }
+
+  // ✅ Fetch Bids (Ensure `_listings=true&_seller=true`)
   let bids = [];
   try {
     const response = await fetch(`${API_PROFILE_BIDS(profileUsername)}?_listings=true&_seller=true`, {
@@ -31,20 +57,22 @@ export async function loadProfileListings() {
     if (!response.ok) throw new Error("Failed to fetch user bids");
     const result = await response.json();
     bids = result.data || [];
-    console.log("📌 User Bids Data:", bids);
+    console.log("💰 User Bids Data:", bids);
   } catch (error) {
     console.error("⚠️ Error fetching bids:", error);
   }
 
-  // ✅ Extract bid listings and attach highest bid amount
+  // ✅ Process Bids to Attach Seller Info & Total Bids Count
   const bidListings = bids
     .filter(bid => bid.listing && bid.listing.id) // ✅ Ensure valid listings
     .map(bid => ({
       ...bid.listing, 
       highestBid: bid.amount, // ✅ Attach highest bid
-      bidderName: bid.bidder?.name || "Unknown Bidder", // ✅ Include bidder info
-      totalBids: bid.listing?._count?.bids || 0, // ✅ Attach total bids
-      seller: bid.listing?.seller || {}, // ✅ Ensure seller info is attached
+      seller: bid.listing.seller || { 
+        name: "Unknown Seller", 
+        avatar: { url: "/images/default-avatar.png" }
+      }, // ✅ Attach seller if missing
+      totalBids: bid.listing._count?.bids || 0, // ✅ Attach total bids count
     }));
 
   console.log("🎯 Processed Bid Listings:", bidListings);
@@ -59,6 +87,7 @@ export async function loadProfileListings() {
   showEmptyStateMessage(wins, "wins-container", "You have no wins yet.");
   showEmptyStateMessage(bidListings, "bids-container", "You haven't placed any bids yet.");
 }
+
 
 function renderPaginatedListings(items, containerId, paginationId) {
   const container = document.getElementById(containerId);
