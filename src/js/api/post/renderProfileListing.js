@@ -1,4 +1,4 @@
-export function renderProfileListingCard(listing, isLoggedIn) {
+export function renderProfileListingCard(listing, isLoggedIn, bid) {
   const {
     id,
     title,
@@ -10,10 +10,12 @@ export function renderProfileListingCard(listing, isLoggedIn) {
     _count,
     bids = [],
     seller = {},
+    highestBid,
   } = listing;
 
   const card = document.createElement("div");
-  card.className = "w-[350px] h-[515px] bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer";
+  card.className = `w-[350px] ${bid ? "h-[440px]" : "h-[515px]"} bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer`;
+
 
   // Check if the listing has expired
   const currentDate = new Date();
@@ -38,33 +40,38 @@ export function renderProfileListingCard(listing, isLoggedIn) {
     }
   }
 
-  // ✅ User Info (Avatar + Username)
-  const userInfo = document.createElement("div");
-  userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
-  userInfo.addEventListener("click", goToUserProfile);
-
-  const avatar = document.createElement("img");
-  avatar.src = seller.avatar?.url || "/images/default-avatar.png"; // ✅ Fix Avatar
-  avatar.alt = `${seller?.name || "Unknown"}'s avatar`;
-  avatar.className = "w-10 h-10 rounded-full object-cover";
-
-  const username = document.createElement("span");
-  username.className = "font-bold";
-  username.textContent = seller?.name || "Unknown"; // ✅ Fix Username
-
-  userInfo.appendChild(avatar);
-  userInfo.appendChild(username);
-
-  // ✅ Listing Image
+  // ✅ Listing Image (Rounded Top for Bids)
   const listingImage = document.createElement("img");
   listingImage.src = media?.[0]?.url || "/images/placeholder.png";
   listingImage.alt = title;
-  listingImage.className = "w-[350px] h-[256px] object-cover cursor-pointer";
+  listingImage.className = `w-[350px] h-[256px] object-cover cursor-pointer ${bid ? "rounded-t-2xl" : ""
+    }`; // ✅ Rounded top for bid listings
   listingImage.addEventListener("click", goToListingPage);
+
+  // ✅ User Info (Avatar + Username) (REMOVE if it's a bid listing)
+  if (!bid) {
+    const userInfo = document.createElement("div");
+    userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
+    userInfo.addEventListener("click", goToUserProfile);
+
+    const avatar = document.createElement("img");
+    avatar.src = seller.avatar?.url || "/images/default-avatar.png";
+    avatar.alt = `${seller?.name || "Unknown"}'s avatar`;
+    avatar.className = "w-10 h-10 rounded-full object-cover";
+
+    const username = document.createElement("span");
+    username.className = "font-bold";
+    username.textContent = seller?.name || "Unknown";
+
+    userInfo.appendChild(avatar);
+    userInfo.appendChild(username);
+    card.appendChild(userInfo);
+  }
 
   // ✅ Tags & End Date
   const tagBar = document.createElement("div");
-  tagBar.className = "w-full h-[25px] bg-lavender-blue bg-opacity-50 flex justify-between items-center px-3 text-sm text-black";
+  tagBar.className =
+    "w-full h-[25px] bg-lavender-blue bg-opacity-50 flex justify-between items-center px-3 text-sm text-black";
 
   const tagSpan = document.createElement("span");
   tagSpan.className = "italic font-inter";
@@ -104,17 +111,10 @@ export function renderProfileListingCard(listing, isLoggedIn) {
 
   const hr = document.createElement("hr");
   hr.className = "pb-1 border-gray-300";
-
-  const totalBids = document.createElement("p");
-  totalBids.className = "text-sm";
-  totalBids.textContent = `Total bids: ${_count?.bids || 0}`;
+  bidSection.appendChild(hr);
 
   const bidInfo = document.createElement("div");
   bidInfo.className = "flex justify-between items-center";
-
-  const highestBid = document.createElement("span");
-  highestBid.className = "text-royal-blue font-bold";
-  highestBid.textContent = `Highest bid: $${bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0}`;
 
   const bidButton = document.createElement("button");
   bidButton.className = "bg-royal-blue text-white font-serif font-bold text-base px-3 py-1 rounded";
@@ -133,16 +133,41 @@ export function renderProfileListingCard(listing, isLoggedIn) {
     bidButton.classList.add("hidden"); // ✅ Hide bid button if expired
   }
 
-  bidSection.appendChild(hr);
-  bidInfo.appendChild(highestBid);
-  bidInfo.appendChild(bidButton);
 
-  bidSection.appendChild(totalBids);
+  if (bid) {
+    const emptyInfo = document.createElement("div");
+    emptyInfo.className = "h-2";
+
+    const yourCurrentBid = document.createElement("span");
+    yourCurrentBid.className = "text-black font-inter";
+    yourCurrentBid.textContent = "You bid: "; // ✅ Keeps existing styling, only adding Inter
+
+    const bidAmount = document.createElement("span");
+    bidAmount.className = "text-royal-blue font-bold";
+    bidAmount.textContent = `${highestBid}$`; // ✅ Keeps $ sign at the end
+
+    // ✅ Append both elements in the correct order
+    yourCurrentBid.appendChild(bidAmount);
+    bidInfo.appendChild(yourCurrentBid);
+    bidSection.appendChild(emptyInfo);
+  } else {
+    const totalBids = document.createElement("p");
+    totalBids.className = "text-sm";
+    totalBids.textContent = `Total bids: ${_count?.bids || 0}`;
+
+    const highestBid = document.createElement("span");
+    highestBid.className = "text-royal-blue font-bold";
+    highestBid.textContent = `Highest bid: $${bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0}`;
+    bidInfo.appendChild(highestBid);
+
+    bidSection.appendChild(totalBids);
+  }
+
+  bidInfo.appendChild(bidButton);
   bidSection.appendChild(bidInfo);
 
   // ✅ Append all elements to card
-  card.appendChild(userInfo);
-  card.appendChild(listingImage);
+  card.appendChild(listingImage); // ✅ Image first (for rounded top)
   card.appendChild(tagBar);
   card.appendChild(details);
   card.appendChild(bidSection);

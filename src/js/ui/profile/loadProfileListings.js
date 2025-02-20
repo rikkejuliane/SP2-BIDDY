@@ -1,7 +1,8 @@
 import { readProfile } from "../../api/profile/read.js";
 import { API_USER_PROFILE, API_PROFILE_BIDS } from "../../api/constants.js";
-import { headers } from "../../api/headers.js"; 
-import { renderProfileListingCard } from "../../api/post/renderProfileListing.js"; 
+import { headers } from "../../api/headers.js";
+import { renderProfileListingCard } from "../../api/post/renderProfileListing.js";
+import { renderPagination } from "../post/pagination.js";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -50,13 +51,14 @@ export async function loadProfileListings() {
   // ✅ Fetch Bids (Ensure `_listings=true&_seller=true`)
   let bids = [];
   try {
-    const response = await fetch(`${API_PROFILE_BIDS(profileUsername)}?_listings=true&_seller=true`, {
+    const response = await fetch(`${API_PROFILE_BIDS(profileUsername)}?_listings=true`, {
       headers: headers(),
     });
 
     if (!response.ok) throw new Error("Failed to fetch user bids");
     const result = await response.json();
     bids = result.data || [];
+
     console.log("💰 User Bids Data:", bids);
   } catch (error) {
     console.error("⚠️ Error fetching bids:", error);
@@ -64,35 +66,47 @@ export async function loadProfileListings() {
 
   // ✅ Process Bids to Attach Seller Info & Total Bids Count
   const bidListings = bids
-    .filter(bid => bid.listing && bid.listing.id) // ✅ Ensure valid listings
-    .map(bid => ({
-      ...bid.listing, 
-      highestBid: bid.amount, // ✅ Attach highest bid
-      seller: bid.listing.seller || { 
-        name: "Unknown Seller", 
-        avatar: { url: "/images/default-avatar.png" }
-      }, // ✅ Attach seller if missing
-      totalBids: bid.listing._count?.bids || 0, // ✅ Attach total bids count
-    }));
+    .filter((bid) => bid.listing && bid.listing.id) // ✅ Ensure valid listings
+    .reduce((uniqueListings, bid) => {
+      // Use the listing ID as a key to ensure uniqueness
+      const existingBid = uniqueListings.get(bid.listing.id);
 
-  console.log("🎯 Processed Bid Listings:", bidListings);
+      // If no bid exists or the current bid is higher than the stored bid, update it
+      if (!existingBid || existingBid.amount < bid.amount) {
+        uniqueListings.set(bid.listing.id, {
+          ...bid.listing,
+          highestBid: bid.amount, // ✅ Get highest bid from all bids
+          currentHighest: bid.listing.bids?.length ? Math.max(...bid.listing.bids.map((b) => b.amount)) : 0, // ✅ Attach user's bid amount
+          isLeading: bid.amount >= (bid.listing.bids?.length ? Math.max(...bid.listing.bids.map((b) => b.amount)) : 0), // ✅ Check if user's bid is highest
+        });
+      }
+
+      return uniqueListings;
+    }, new Map());
+
+  // Convert Map to array
+  const uniqueBidListings = Array.from(bidListings.values());
+
+  console.log("📋 Processed Listings with User Bids:", uniqueBidListings);
 
   // ✅ Render Listings, Wins, and Bids
-  renderPaginatedListings(listings, "listings-container", "listings-pagination");
-  renderPaginatedListings(wins, "wins-container", "wins-pagination");
-  renderPaginatedListings(bidListings, "bids-container", "bids-pagination");
+  renderPaginatedListings(listings, "listings-container", "pagination-listings");
+  renderPaginatedListings(wins, "wins-container", "pagination-wins");
+  renderPaginatedListings(uniqueBidListings, "bids-container", "pagination-bids", "bid");  
 
   // ✅ Handle Empty State Messages
   showEmptyStateMessage(listings, "listings-container", "No listings found.");
   showEmptyStateMessage(wins, "wins-container", "You have no wins yet.");
-  showEmptyStateMessage(bidListings, "bids-container", "You haven't placed any bids yet.");
+  showEmptyStateMessage(uniqueBidListings, "bids-container", "You haven't placed any bids yet.");
 }
 
-
-function renderPaginatedListings(items, containerId, paginationId) {
+function renderPaginatedListings(items, containerId, paginationId, bid) {
   const container = document.getElementById(containerId);
-  const pagination = document.getElementById(paginationId);
-  if (!container || !pagination) return;
+  const paginationContainer = document.getElementById(paginationId);
+  if (!container || !paginationContainer) {
+    console.error(`❌ Pagination container or listing container not found! (ID: ${paginationId})`);
+    return;
+  }
 
   let currentPage = 1;
   const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -104,35 +118,25 @@ function renderPaginatedListings(items, containerId, paginationId) {
     const paginatedItems = items.slice(start, end);
 
     paginatedItems.forEach((item) => {
-      const card = renderProfileListingCard(item, true);
+      const card = renderProfileListingCard(item, true, bid);
       container.appendChild(card);
     });
 
-    renderPaginationControls(pagination, page, totalPages);
-  }
-
-  function renderPaginationControls(paginationElement, currentPage, totalPages) {
-    paginationElement.innerHTML = "";
-    if (totalPages <= 1) return;
-
-    for (let i = 1; i <= totalPages; i++) {
-      const button = document.createElement("button");
-      button.textContent = i;
-      button.className = `px-3 py-1 mx-1 rounded ${
-        i === currentPage ? "bg-royal-blue text-white" : "bg-gray-300"
-      }`;
-      button.addEventListener("click", () => displayPage(i));
-      paginationElement.appendChild(button);
-    }
+    // ✅ Now using new `renderPagination`
+    renderPagination(paginationId, currentPage, totalPages, (newPage) => {
+      currentPage = newPage;
+      displayPage(newPage);
+    });
   }
 
   displayPage(currentPage);
 }
 
+
 function showEmptyStateMessage(items, containerId, message) {
   const container = document.getElementById(containerId);
   if (!container) return;
-  
+
   if (items.length === 0) {
     container.innerHTML = `
     <div class="col-span-full flex justify-center items-center">
