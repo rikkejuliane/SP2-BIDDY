@@ -1,3 +1,15 @@
+/**
+ * Renders a pagination UI with previous/next buttons and page numbers.
+ *
+ * - Supports dynamic page number rendering based on total pages.
+ * - Adds "..." for large paginations to keep UI clean.
+ * - Calls `onPageChange` when a page button is clicked.
+ *
+ * @param {string} paginationContainerId - The ID of the pagination container.
+ * @param {number} currentPage - The current active page.
+ * @param {number} totalPages - The total number of pages available.
+ * @param {function} onPageChange - Callback function to handle page changes.
+ */
 export function renderPagination(paginationContainerId, currentPage, totalPages, onPageChange) {
   const paginationContainer = document.getElementById(paginationContainerId);
   if (!paginationContainer) {
