@@ -9,6 +9,16 @@ export let totalPages = 1;
 export let allListings = []; // Store all listings globally
 export let filteredListings = []; // Store filtered listings globally
 
+/**
+ * Fetches and loads auction listings from the API.
+ * - Retrieves all listings while handling API pagination.
+ * - Filters out broken listings (missing required data).
+ * - Sorts listings by newest first.
+ * - Initializes tag filtering.
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
 export async function loadListings() {
   const container = document.getElementById("listings-container");
   if (!container) return console.error("❌ Listings container not found!");
@@ -67,7 +77,13 @@ export async function loadListings() {
   }
 }
 
-// ✅ Function to update filtered listings when selecting a tag
+/**
+ * Updates the filtered listings when selecting a tag.
+ * - Updates the `filteredListings` array.
+ * - Resets pagination and re-renders the listings.
+ *
+ * @param {Array} newListings - The filtered listings based on selected tags.
+ */
 export function updateFilteredListings(newListings) {
   filteredListings = [...newListings]; // Update global filtered listings
   totalPages = Math.ceil(filteredListings.length / ITEMS_PER_PAGE);
@@ -75,13 +91,24 @@ export function updateFilteredListings(newListings) {
   renderPage(filteredListings);
 }
 
-// ✅ Function to update the current page
+/**
+ * Sets the current page for pagination and re-renders the listings.
+ *
+ * @param {number} newPage - The new page number to set.
+ */
 export function setCurrentPage(newPage) {
   currentPage = newPage;
   renderPage(filteredListings); // Ensure it only shows filtered listings
 }
 
-// ✅ Modified renderPage to always use filteredListings
+/**
+ * Renders the listings for the current page.
+ * - Displays the correct subset of listings based on pagination.
+ * - Calls `renderPagination` to update page controls.
+ * - Updates total listings count dynamically.
+ *
+ * @param {Array} listingsToShow - The array of listings to display.
+ */
 export function renderPage(listingsToShow) {
   const container = document.getElementById("listings-container");
   if (!container) return;

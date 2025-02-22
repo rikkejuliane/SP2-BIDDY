@@ -2,6 +2,11 @@ import { API_LISTING_SINGLE } from "../../api/constants.js";
 import { renderSingleListing } from "../../api/post/renderSingleListing.js";
 import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js"; // ✅ Import the spinner
 
+/**
+ * Fetches and displays a single listing based on the listing ID from the URL parameters.
+ * Shows a loading spinner while fetching the data.
+ * Handles errors and displays appropriate messages if the listing is not found.
+ */
 export async function loadSingleListing() {
   const container = document.getElementById("single-listing-container");
   if (!container) return console.error("❌ Single listing container not found!");

@@ -1,7 +1,14 @@
 import { displayUserCredits } from "../auth/credits.js";
 import { setLogoutListener } from "../../ui/global/logout.js";
-import { setupHamburgerMenu } from "./hamburgerMenu.js"; 
+import { setupHamburgerMenu } from "./hamburgerMenu.js";
 
+/**
+ * Updates the navigation bar dynamically based on authentication status.
+ * - Displays navigation links and buttons based on user login state.
+ * - Adds event listeners for logout and credit display.
+ *
+ * @returns {void}
+ */
 export function updateNavbar() {
     const navbarContainer = document.getElementById("navbar");
     if (!navbarContainer) return;

@@ -2,6 +2,14 @@ import { API_BID_ON_LISTING } from '../constants.js'; // Import the API endpoint
 import { headers } from '../headers.js'; // Import the headers function
 import { showOverlayModal, showActionModal } from '../../ui/global/modal.js';
 
+/**
+ * Places a bid on a listing by making a POST request to the API.
+ *
+ * @param {string} listingId - The ID of the listing to place a bid on.
+ * @param {number} bidAmount - The bid amount to be placed.
+ * @returns {Promise<Object>} - The bid data returned from the API.
+ * @throws {Error} - Throws an error if the request fails.
+ */
 export async function placeBid(listingId, bidAmount) {
   try {
     // Make the API request to place a bid
@@ -27,13 +35,18 @@ export async function placeBid(listingId, bidAmount) {
   }
 }
 
-// New function to handle bid placement logic
+/**
+ * Handles the logic for placing a bid, including validation, API calls, and UI feedback.
+ *
+ * @param {string} listingId - The ID of the listing to place a bid on.
+ * @param {number} bidAmount - The bid amount to be placed.
+ */
 export async function handleBidPlacement(listingId, bidAmount) {
   if (isNaN(bidAmount) || bidAmount <= 0) {
     showActionModal("Please enter a valid bid amount.", [
       {
         text: "OK",
-        onClick: () => {}, // No additional action needed
+        onClick: () => { }, // No additional action needed
       },
     ]);
     return;
@@ -57,7 +70,7 @@ export async function handleBidPlacement(listingId, bidAmount) {
     showActionModal("Failed to place bid: " + errorMessage, [ // Use action modal for error with an OK button
       {
         text: "OK",
-        onClick: () => {} // No additional action needed
+        onClick: () => { } // No additional action needed
       }
     ]);
   }

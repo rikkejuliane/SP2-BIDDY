@@ -1,6 +1,14 @@
 import { displayUserCredits } from "../auth/credits.js";
 import { setLogoutListener } from "../../ui/global/logout.js";
 
+/**
+ * Initializes and handles the functionality of the mobile hamburger menu.
+ * This includes opening/closing the menu, displaying user credits,
+ * and setting up the logout button.
+ *
+ * @function setupHamburgerMenu
+ * @returns {void}
+ */
 export function setupHamburgerMenu() {
   const menuIcon = document.getElementById("hamburgermeny");
   let menu = document.getElementById("mobile-menu");
@@ -12,6 +20,13 @@ export function setupHamburgerMenu() {
     toggleMenu();
   });
 
+  /**
+  * Toggles the hamburger menu's visibility and updates UI elements dynamically.
+  * Adds/removes the menu from the DOM if it does not exist.
+  *
+  * @function toggleMenu
+  * @returns {void}
+  */
   function toggleMenu() {
     if (!menu) {
       menu = document.createElement("div");

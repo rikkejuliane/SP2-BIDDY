@@ -1,3 +1,11 @@
+/**
+ * Renders a profile listing card element.
+ *
+ * @param {Object} listing - The listing data object.
+ * @param {boolean} isLoggedIn - Indicates whether the user is logged in.
+ * @param {boolean} bid - Indicates whether the listing is a bid.
+ * @returns {HTMLElement} - The generated profile listing card element.
+ */
 export function renderProfileListingCard(listing, isLoggedIn, bid) {
   const {
     id,
