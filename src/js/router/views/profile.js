@@ -18,7 +18,13 @@ setupLogoSwap();
 loadProfile();
 loadProfileListings(); // ✅ Fetch and display listings, wins, and bids
 
-
+/**
+ * Initializes the profile page by fetching user data and 
+ * setting up the edit profile functionality if the user is the owner.
+ * 
+ * @async
+ * @function initProfilePage
+ */
 async function initProfilePage() {
   const urlParams = new URLSearchParams(window.location.search);
   const profileUsername = urlParams.get("user") || localStorage.getItem("username");
