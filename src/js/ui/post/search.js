@@ -35,7 +35,7 @@ export function setupSearch() {
 
     try {
       console.log(`🔍 Searching for: ${query}`);
-      const response = await fetch(`${API_LISTING_SEARCH}${encodeURIComponent(query)}`);
+      const response = await fetch(`${API_LISTING_SEARCH}${encodeURIComponent(query)}&_seller=true`);
       if (!response.ok) throw new Error("Failed to fetch search results");
 
       const result = await response.json();
