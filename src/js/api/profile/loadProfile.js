@@ -1,5 +1,9 @@
 import { readProfile } from "./read.js";
 
+/**
+ * Loads and displays the user's profile information.
+ * Fetches data from the API and updates the UI accordingly.
+ */
 export async function loadProfile() {
   const urlParams = new URLSearchParams(window.location.search);
   const profileUsername = urlParams.get("user"); // Get user from URL
@@ -14,6 +18,12 @@ export async function loadProfile() {
   updateProfileUI(profileData, isOwner); // ✅ Update UI
 }
 
+/**
+ * Updates the profile UI elements with the fetched profile data.
+ *
+ * @param {Object} profile - The profile data retrieved from the API.
+ * @param {boolean} isOwner - Indicates whether the logged-in user is viewing their own profile.
+ */
 function updateProfileUI(profile, isOwner) {
   const bannerElement = document.getElementById("banner-image");
   const avatarElement = document.getElementById("profile-avatar");
@@ -44,7 +54,11 @@ function updateProfileUI(profile, isOwner) {
   updateProfileStats(profile);
 }
 
-
+/**
+ * Updates the profile statistics (listings, wins, bids).
+ *
+ * @param {Object} profile - The profile data containing statistics.
+ */
 function updateProfileStats(profile) {
   document.getElementById("listings-count").textContent = `Listings: ${profile._count.listings || 0}`;
   document.getElementById("wins-count").textContent = `Wins: ${profile._count.wins || 0}`;
