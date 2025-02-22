@@ -41,4 +41,3 @@ async function initProfilePage() {
 }
 
 initProfilePage();
-initProfilePage();

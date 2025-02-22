@@ -19,7 +19,8 @@ function updateProfileUI(profile, isOwner) {
   const avatarElement = document.getElementById("profile-avatar");
   const usernameElement = document.getElementById("profile-username");
   const bioElement = document.getElementById("profile-bio");
-  const editButton = document.getElementById("edit-profile-btn"); // ✅ Select by ID now
+  const editButton = document.getElementById("edit-profile-btn");
+  const welcomeMessage = document.getElementById("welcome-message"); // ✅ Select the welcome message
 
   // ✅ Set banner (fallback to default)
   bannerElement.style.backgroundImage = `url('${profile.banner?.url || "/public/images/default-banner.jpg"}')`;
@@ -36,9 +37,13 @@ function updateProfileUI(profile, isOwner) {
   // ✅ Show "Edit Profile" button only if it's the logged-in user's profile
   editButton.classList.toggle("hidden", !isOwner);
 
+  // ✅ Hide "Welcome back!" for other users
+  welcomeMessage.classList.toggle("hidden", !isOwner);
+
   // ✅ Update stats dynamically
   updateProfileStats(profile);
 }
+
 
 function updateProfileStats(profile) {
   document.getElementById("listings-count").textContent = `Listings: ${profile._count.listings || 0}`;

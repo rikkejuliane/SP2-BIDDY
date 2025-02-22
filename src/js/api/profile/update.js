@@ -18,11 +18,15 @@ export function openEditProfileModal(profileData) {
 
   // ✅ Create modal content
   const modalContent = document.createElement("div");
-  modalContent.className = "relative bg-white p-6 rounded-lg shadow-lg text-center z-[10000] w-[350px] flex flex-col items-center";
+  modalContent.className = "relative bg-white p-6 rounded-lg shadow-lg z-[10000] w-[350px] flex flex-col justify-center items-center max-h-[70vh] overflow-auto";
+
+  // ✅ Create modal body wrapper (For proper centering)
+  const modalBody = document.createElement("div");
+  modalBody.className = "flex flex-col items-center text-center w-full";
 
   // ✅ Create heading
   const heading = document.createElement("h2");
-  heading.className = "text-black font-serif text-[20px] font-bold text-center";
+  heading.className = "text-black font-serif text-[20px] font-bold";
   heading.textContent = "Edit Profile";
 
   // ✅ Create close button (❌) - Top right of modal
@@ -34,7 +38,7 @@ export function openEditProfileModal(profileData) {
   // ✅ Create the form
   const form = document.createElement("form");
   form.id = "edit-profile-form";
-  form.className = "flex flex-col items-center w-full mt-4";
+  form.className = "flex flex-col w-full mt-4 items-start";
 
   // ✅ Avatar Input
   const avatarLabel = document.createElement("label");
@@ -48,7 +52,7 @@ export function openEditProfileModal(profileData) {
   avatarInput.name = "avatar";
   avatarInput.placeholder = "Enter avatar URL";
   avatarInput.value = profileData.avatar?.url || "";
-  avatarInput.className = "mt-1 p-2 shadow-md rounded w-[250px] h-[35px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
+  avatarInput.className = "mt-1 p-2 shadow-md rounded w-[302px] h-[35px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
 
   // ✅ Banner Input
   const bannerLabel = document.createElement("label");
@@ -62,7 +66,7 @@ export function openEditProfileModal(profileData) {
   bannerInput.name = "banner";
   bannerInput.placeholder = "Enter banner URL";
   bannerInput.value = profileData.banner?.url || "";
-  bannerInput.className = "mt-1 p-2 shadow-md rounded w-[250px] h-[35px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
+  bannerInput.className = "mt-1 p-2 shadow-md rounded w-[302px] h-[35px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
 
   // ✅ Bio Input
   const bioLabel = document.createElement("label");
@@ -75,7 +79,7 @@ export function openEditProfileModal(profileData) {
   bioInput.name = "bio";
   bioInput.placeholder = "Tell us about yourself...";
   bioInput.value = profileData.bio || "";
-  bioInput.className = "mt-1 p-2 shadow-md rounded w-[250px] h-[80px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
+  bioInput.className = "mt-1 p-2 shadow-md rounded w-[302px] h-[80px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
 
   // ✅ Save Button
   const saveButton = document.createElement("button");
@@ -112,9 +116,11 @@ export function openEditProfileModal(profileData) {
   form.appendChild(bioInput);
   form.appendChild(saveButton);
   
+  modalBody.appendChild(heading);
+  modalBody.appendChild(form);
+
   modalContent.appendChild(closeButton);
-  modalContent.appendChild(heading);
-  modalContent.appendChild(form);
+  modalContent.appendChild(modalBody);
   modalOverlay.appendChild(modalContent);
   document.body.appendChild(modalOverlay);
 }
