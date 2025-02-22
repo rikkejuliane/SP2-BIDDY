@@ -1,6 +1,14 @@
 import { API_USER_PROFILE } from "../../api/constants.js";
 import { headers } from "../../api/headers.js"; 
 
+/**
+ * Fetches and displays the logged-in user's available credits in both the main navbar 
+ * and the hamburger menu (if applicable).
+ * 
+ * @async
+ * @function displayUserCredits
+ * @returns {Promise<void>} - Updates the UI with the user's credit balance.
+ */
 export async function displayUserCredits() {
     const username = localStorage.getItem("username");
     if (!username) return;
