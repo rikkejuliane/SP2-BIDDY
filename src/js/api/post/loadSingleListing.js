@@ -1,5 +1,6 @@
 import { API_LISTING_SINGLE } from "../../api/constants.js";
 import { renderSingleListing } from "../../api/post/renderSingleListing.js";
+import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js"; // ✅ Import the spinner
 
 export async function loadSingleListing() {
   const container = document.getElementById("single-listing-container");
@@ -13,6 +14,12 @@ export async function loadSingleListing() {
     return;
   }
 
+  // ✅ Create and show loading spinner
+  const spinner = createLoadingSpinner("listing-spinner");
+  container.innerHTML = ""; // Clear container before showing spinner
+  container.appendChild(spinner);
+  spinner.classList.remove("hidden"); // Show spinner
+
   try {
     const response = await fetch(`${API_LISTING_SINGLE(listingId)}?_bids=true&_seller=true`);
     if (!response.ok) throw new Error("Failed to fetch listing");
@@ -22,7 +29,8 @@ export async function loadSingleListing() {
 
     if (!listing) throw new Error("Listing not found.");
 
-    // ✅ Render the listing in the container
+    // ✅ Hide the spinner once data is loaded
+    spinner.classList.add("hidden");
     container.innerHTML = ""; // Clear previous content
     container.appendChild(renderSingleListing(listing, Boolean(localStorage.getItem("token"))));
 

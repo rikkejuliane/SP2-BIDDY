@@ -100,14 +100,15 @@ export function renderPage(listingsToShow) {
     });
   }
 
-  // ✅ Now pagination listens to filteredListings instead of allListings
-  renderPagination(currentPage, totalPages, (newPage) => {
+  // ✅ Use the correct pagination ID for the homepage
+  renderPagination("pagination-container", currentPage, totalPages, (newPage) => {
     setCurrentPage(newPage);
   });
 
   // ✅ Update total listings count dynamically
   const totalListingsElement = document.getElementById("total-listings-count");
   if (totalListingsElement) {
-    totalListingsElement.textContent = filteredListings.length; // Correct count after filtering
+    totalListingsElement.textContent = filteredListings.length;
   }
 }
+

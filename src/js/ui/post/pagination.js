@@ -1,6 +1,9 @@
-export function renderPagination(currentPage, totalPages, onPageChange) {
-  const paginationContainer = document.getElementById("pagination-container");
-  if (!paginationContainer) return console.error("❌ Pagination container not found!");
+export function renderPagination(paginationContainerId, currentPage, totalPages, onPageChange) {
+  const paginationContainer = document.getElementById(paginationContainerId);
+  if (!paginationContainer) {
+    console.error(`❌ Pagination container not found! (ID: ${paginationContainerId})`);
+    return;
+  }
 
   paginationContainer.innerHTML = ""; // Clear old pagination
 
@@ -17,22 +20,18 @@ export function renderPagination(currentPage, totalPages, onPageChange) {
 
   paginationContainer.appendChild(prevButton);
 
-  // 🔹 Generate Page Numbers with Ellipsis Logic
+  // 🔹 Generate Page Numbers
   const pages = [];
-  
   if (totalPages <= 5) {
-    // If 5 or fewer pages, show all
     for (let i = 1; i <= totalPages; i++) pages.push(i);
   } else {
-    pages.push(1); // Always show first page
-    if (currentPage > 3) pages.push("..."); // Ellipsis before current range
-
+    pages.push(1);
+    if (currentPage > 3) pages.push("...");
     let start = Math.max(2, currentPage - 1);
     let end = Math.min(totalPages - 1, currentPage + 1);
     for (let i = start; i <= end; i++) pages.push(i);
-
-    if (currentPage < totalPages - 2) pages.push("..."); // Ellipsis after current range
-    pages.push(totalPages); // Always show last page
+    if (currentPage < totalPages - 2) pages.push("...");
+    pages.push(totalPages);
   }
 
   // 🔹 Render Page Buttons
