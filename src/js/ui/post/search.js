@@ -2,6 +2,13 @@ import { API_LISTING_SEARCH } from "../../api/constants.js";
 import { renderListingCard } from "../../api/post/renderListingCard.js";
 import { loadListings } from "./loadListings.js"; 
 
+/**
+ * Sets up the search functionality for filtering listings in real-time.
+ * - Detects user input in the search bar.
+ * - Hides hero section when searching.
+ * - Fetches search results from the API.
+ * - Renders search results or displays a "No results found" message.
+ */
 export function setupSearch() {
   const searchInput = document.getElementById("search-input");
   const heroSection = document.getElementById("hero-section"); // ✅ Section to hide/show

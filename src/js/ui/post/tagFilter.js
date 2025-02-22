@@ -1,6 +1,14 @@
 import { updateFilteredListings, setCurrentPage } from "./loadListings.js";
 import { renderPagination } from "./pagination.js";
 
+/**
+ * Initializes the tag filtering functionality for listings.
+ * - Highlights the selected tag.
+ * - Filters listings based on the selected tag.
+ * - Scrolls the tag bar to keep the selected tag in view.
+ *
+ * @param {Array} allListings - The array of all available listings.
+ */
 export function initTagFiltering(allListings) {
   const tagItems = document.querySelectorAll(".tag-item");
   const leftButton = document.getElementById("tag-left");
@@ -12,9 +20,14 @@ export function initTagFiltering(allListings) {
   const tags = Array.from(tagItems).map(tag => tag.getAttribute("data-tag"));
   let currentIndex = tags.indexOf("all"); // Default to "all"
 
+  /**
+   * Updates the active tag and applies filtering.
+   * @param {number} index - The index of the tag to activate.
+   * @param {boolean} [isButtonClick=false] - Whether the update was triggered by a navigation button.
+   */
   function updateActiveTag(index, isButtonClick = false) {
     if (index < 0 || index >= tags.length) return;
-    
+
     const activeTag = tags[index];
     const activeTagItem = document.querySelector(`.tag-item[data-tag="${activeTag}"]`);
 
@@ -29,14 +42,14 @@ export function initTagFiltering(allListings) {
       const tagContainer = document.querySelector("#tag-container");
 
       if (tagContainer) {
-          const containerRect = tagContainer.getBoundingClientRect();
-          const itemRect = activeTagItem.getBoundingClientRect();
-      
-          // Calculate scroll position so the active tag moves to the center
-          const scrollAmount = itemRect.left - containerRect.left - (containerRect.width / 2) + (itemRect.width / 2);
-      
-          // Scroll only the tag bar, not the whole page
-          tagContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        const containerRect = tagContainer.getBoundingClientRect();
+        const itemRect = activeTagItem.getBoundingClientRect();
+
+        // Calculate scroll position so the active tag moves to the center
+        const scrollAmount = itemRect.left - containerRect.left - (containerRect.width / 2) + (itemRect.width / 2);
+
+        // Scroll only the tag bar, not the whole page
+        tagContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
       }
     }
 
@@ -69,7 +82,13 @@ export function initTagFiltering(allListings) {
   updateActiveTag(currentIndex);
 }
 
-// ✅ Function to filter listings by tag and update pagination
+/**
+ * Filters the listings based on the selected tag.
+ * Updates the displayed listings and pagination.
+ *
+ * @param {string} tag - The selected tag for filtering.
+ * @param {Array} allListings - The complete list of listings.
+ */
 export function filterListingsByTag(tag, allListings) {
   if (!allListings || !Array.isArray(allListings)) return;
 
@@ -80,7 +99,12 @@ export function filterListingsByTag(tag, allListings) {
   updateFilteredListings(newFilteredListings);
 }
 
-// ✅ Function to update tag styling dynamically (Fixes SVG Thickness Issue)
+/**
+ * Updates tag styling dynamically to fix SVG thickness issues.
+ * Ensures that the active tag stands out.
+ *
+ * @param {HTMLElement} activeTag - The currently selected tag element.
+ */
 function updateTagStyles(activeTag) {
   const allTags = document.querySelectorAll(".tag-item");
 
