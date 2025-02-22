@@ -99,11 +99,11 @@ export function openEditProfileModal(profileData) {
 
     try {
       await updateProfile(profileData.name, updatedProfile);
-      showOverlayModal("✅ Profile updated successfully!");
+      showOverlayModal("Profile updated successfully!");
       modalOverlay.remove();
       setTimeout(() => location.reload(), 1500); // Refresh after update
     } catch (error) {
-      showOverlayModal("❌ Failed to update profile.");
+      showOverlayModal("Failed to update profile.");
     }
   });
 
@@ -127,8 +127,11 @@ export function openEditProfileModal(profileData) {
 
 /**
  * Updates user profile via API.
+ *
  * @param {string} username - The user's username.
  * @param {Object} updatedData - The profile update data.
+ * @returns {Promise<Object>} A promise resolving to the updated profile data.
+ * @throws {Error} If the update fails.
  */
 export async function updateProfile(username, updatedData) {
   const response = await fetch(`${API_USER_PROFILE}${username}`, {

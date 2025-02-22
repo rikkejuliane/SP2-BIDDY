@@ -1,6 +1,15 @@
 import { API_USER_PROFILE, API_PROFILE_BIDS } from "../constants.js"; // ✅ Import API routes
 import { headers } from "../headers.js";
 
+/**
+ * Fetches profile data for a given username, including listings, wins, and seller info.
+ * If no username is provided, it defaults to the logged-in user's profile.
+ *
+ * @param {string} [username] - The username of the profile to fetch.
+ * @returns {Promise<{data: Object, isOwner: boolean} | {error: string}>} 
+ *          A promise resolving to an object containing profile data and ownership status,
+ *          or an error message if the profile cannot be fetched.
+ */ 
 export async function readProfile(username) {
   if (!username) {
     username = localStorage.getItem("username"); // ✅ Default to logged-in user
@@ -61,4 +70,4 @@ export async function readProfile(username) {
 
 
 
-export async function readProfiles(limit, page) {}
+export async function readProfiles(limit, page) {} // might delete?
