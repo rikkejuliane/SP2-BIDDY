@@ -1,5 +1,5 @@
 export function authGuard() {
-  const publicPages = ["/", "/auth/", "/post/"]; // ✅ Allow these pages for everyone
+  const publicPages = ["/", "/auth/", "/post/", "/about/", "/about/story/"]; // ✅ Allow these pages for everyone
   const currentPath = window.location.pathname;
   const isLoggedIn = localStorage.getItem("token");
 

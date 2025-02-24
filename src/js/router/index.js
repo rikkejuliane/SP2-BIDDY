@@ -24,6 +24,9 @@ export default async function router(pathname = window.location.pathname) {
       case "/about/":   // Add this new case for the about page
       await import("./views/about.js");
       break;
+      case "/about/story/":  // Add routing for Our Story
+      await import("./views/story.js");
+      break;
     default:
       await import("./views/notFound.js");
   }
