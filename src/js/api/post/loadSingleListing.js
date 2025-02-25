@@ -9,7 +9,7 @@ import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js"; // ✅
  */
 export async function loadSingleListing() {
   const container = document.getElementById("single-listing-container");
-  if (!container) return console.error("❌ Single listing container not found!");
+  if (!container) return console.error("Single listing container not found!");
 
   const urlParams = new URLSearchParams(window.location.search);
   const listingId = urlParams.get("id");
@@ -19,14 +19,15 @@ export async function loadSingleListing() {
     return;
   }
 
-  // ✅ Create and show loading spinner
   const spinner = createLoadingSpinner("listing-spinner");
-  container.innerHTML = ""; // Clear container before showing spinner
+  container.innerHTML = "";
   container.appendChild(spinner);
-  spinner.classList.remove("hidden"); // Show spinner
+  spinner.classList.remove("hidden");
 
   try {
-    const response = await fetch(`${API_LISTING_SINGLE(listingId)}?_bids=true&_seller=true`);
+    const response = await fetch(
+      `${API_LISTING_SINGLE(listingId)}?_bids=true&_seller=true`
+    );
     if (!response.ok) throw new Error("Failed to fetch listing");
 
     const result = await response.json();
@@ -34,13 +35,13 @@ export async function loadSingleListing() {
 
     if (!listing) throw new Error("Listing not found.");
 
-    // ✅ Hide the spinner once data is loaded
     spinner.classList.add("hidden");
-    container.innerHTML = ""; // Clear previous content
-    container.appendChild(renderSingleListing(listing, Boolean(localStorage.getItem("token"))));
-
+    container.innerHTML = "";
+    container.appendChild(
+      renderSingleListing(listing, Boolean(localStorage.getItem("token")))
+    );
   } catch (error) {
-    console.error("❌ Error loading single listing:", error);
+    console.error("Error loading single listing:", error);
     container.innerHTML = `<p class="text-center text-red-600">Error loading listing.</p>`;
   }
 }

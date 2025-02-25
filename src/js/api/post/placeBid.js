@@ -1,6 +1,6 @@
-import { API_BID_ON_LISTING } from '../constants.js'; // Import the API endpoint constant
-import { headers } from '../headers.js'; // Import the headers function
-import { showOverlayModal, showActionModal } from '../../ui/global/modal.js';
+import { API_BID_ON_LISTING } from "../constants.js"; // Import the API endpoint constant
+import { headers } from "../headers.js"; // Import the headers function
+import { showOverlayModal, showActionModal } from "../../ui/global/modal.js";
 
 /**
  * Places a bid on a listing by making a POST request to the API.
@@ -12,26 +12,24 @@ import { showOverlayModal, showActionModal } from '../../ui/global/modal.js';
  */
 export async function placeBid(listingId, bidAmount) {
   try {
-    // Make the API request to place a bid
     const response = await fetch(API_BID_ON_LISTING(listingId), {
       method: "POST",
-      headers: headers(), // Call the headers function to get the necessary headers
-      body: JSON.stringify({ amount: bidAmount }), // Send the bid amount in the request body
+      headers: headers(),
+      body: JSON.stringify({ amount: bidAmount }),
     });
 
     // Check if the response is not OK
     if (!response.ok) {
-      const errorData = await response.json(); // Get the error response
-      console.log("API Response:", errorData); // Log the response for debugging
-      throw errorData; // Throw the entire error data for handling in the calling function
+      const errorData = await response.json();
+      throw errorData;
     }
 
     // Parse the response data
     const result = await response.json();
-    return result.data; // Return the bid data
+    return result.data;
   } catch (error) {
     console.error("Error placing bid:", error);
-    throw error; // Rethrow the error for handling in the calling function
+    throw error;
   }
 }
 
@@ -46,32 +44,29 @@ export async function handleBidPlacement(listingId, bidAmount) {
     showActionModal("Please enter a valid bid amount.", [
       {
         text: "OK",
-        onClick: () => { }, // No additional action needed
+        onClick: () => {},
       },
     ]);
     return;
   }
 
   try {
-    await placeBid(listingId, bidAmount); // Call the placeBid function with the listing ID and bid amount
-    showOverlayModal("Bid placed successfully!"); // Use modal for success
+    await placeBid(listingId, bidAmount);
+    showOverlayModal("Bid placed successfully!");
 
-    // Reload the page after a successful bid
     setTimeout(() => {
-      location.reload(); // Reload the page to update the listing
-    }, 1000); // Optional: Add a delay before reloading to allow the user to see the success message
-
+      location.reload();
+    }, 1000);
   } catch (error) {
-    // Check if the error has a response with errors array
-    let errorMessage = "An unknown error occurred."; // Fallback message
+    let errorMessage = "An unknown error occurred.";
     if (error.errors && error.errors.length > 0) {
-      errorMessage = error.errors[0].message; // Get the first error message
+      errorMessage = error.errors[0].message;
     }
-    showActionModal("Failed to place bid: " + errorMessage, [ // Use action modal for error with an OK button
+    showActionModal("Failed to place bid: " + errorMessage, [
       {
         text: "OK",
-        onClick: () => { } // No additional action needed
-      }
+        onClick: () => {},
+      },
     ]);
   }
 }
