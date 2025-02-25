@@ -10,18 +10,18 @@ import { setupHamburgerMenu } from "./hamburgerMenu.js";
  * @returns {void}
  */
 export function updateNavbar() {
-    const navbarContainer = document.getElementById("navbar");
-    if (!navbarContainer) return;
+  const navbarContainer = document.getElementById("navbar");
+  if (!navbarContainer) return;
 
-    const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = localStorage.getItem("token");
 
-    let navbarHTML = `
+  let navbarHTML = `
         <nav class="hidden md:flex items-center">
             <ul class="flex flex-row justify-center items-center gap-6 font-inter font-bold text-charcoal-grey whitespace-nowrap">
     `;
 
-    if (isLoggedIn) {
-        navbarHTML += `
+  if (isLoggedIn) {
+    navbarHTML += `
             <li id="user-credits">Your credit: <span class="text-royal-blue">$0</span></li>
             <li><a href="/post/create/">New listing</a></li>
             <li><a href="/profile/">Profile</a></li>
@@ -31,13 +31,12 @@ export function updateNavbar() {
                 </button>
             </li>
         `;
-    }
+  }
 
-    navbarHTML += `</ul></nav>`;
+  navbarHTML += `</ul></nav>`;
 
-    // ✅ Login button is placed **outside the nav**, so it’s always visible
-    if (!isLoggedIn) {
-        navbarHTML += `
+  if (!isLoggedIn) {
+    navbarHTML += `
             <div class="flex justify-center mt-3">
                 <a href="/auth/" class="bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded sm:w-[100px] sm:h-[30px] w-10 h-10 flex items-center justify-center mx-auto">
                     <span class="hidden sm:block">Login</span> 
@@ -47,11 +46,10 @@ export function updateNavbar() {
                 </a>
             </div>
         `;
-    }
+  }
 
-    // ✅ Show the hamburger menu **only when logged in and under 850px**
-    if (isLoggedIn) {
-        navbarHTML += `
+  if (isLoggedIn) {
+    navbarHTML += `
             <div id="hamburgermeny" class="hidden max-[849px]:block cursor-pointer z-50">
                 <span></span>
                 <span></span>
@@ -59,13 +57,13 @@ export function updateNavbar() {
                 <span></span>
             </div>
         `;
-    }
+  }
 
-    navbarContainer.innerHTML = navbarHTML;
+  navbarContainer.innerHTML = navbarHTML;
 
-    if (isLoggedIn) {
-        displayUserCredits();
-        setLogoutListener();
-        setupHamburgerMenu();
-    }
+  if (isLoggedIn) {
+    displayUserCredits();
+    setLogoutListener();
+    setupHamburgerMenu();
+  }
 }

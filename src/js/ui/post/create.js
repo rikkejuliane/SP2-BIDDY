@@ -32,9 +32,9 @@ export async function onCreatePost(event) {
   try {
     const createdListing = await createPost(listingData);
     if (createdListing) {
-      window.location.href = `/post/?id=${createdListing.id}`; // Redirect to listing page
+      window.location.href = `/post/?id=${createdListing.id}`;
     }
   } catch (error) {
-    console.error("❌ Failed to create listing:", error);
+    console.error("Failed to create listing:", error);
   }
 }
