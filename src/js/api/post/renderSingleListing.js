@@ -26,7 +26,15 @@ export function renderSingleListing(listing, isLoggedIn) {
 
   // User Info
   const userInfo = document.createElement("div");
-  userInfo.className = "flex items-center gap-2 p-3";
+userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
+userInfo.addEventListener("click", () => {
+  const loggedInUsername = localStorage.getItem("username");
+  if (seller.name === loggedInUsername) {
+    window.location.href = "/profile/";
+  } else {
+    window.location.href = `/profile/?user=${seller.name}`;
+  }
+});
 
   const avatar = document.createElement("img");
   avatar.src = seller?.avatar?.url || "/images/default-avatar.png";
