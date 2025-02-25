@@ -13,7 +13,8 @@ export const API_LISTINGS = `${API_AUCTION}/listings`;
 export const API_LISTING_SEARCH = `${API_LISTINGS}/search?q=`;
 export const API_LISTING_SINGLE = (id) => `${API_LISTINGS}/${id}`;
 export const API_LISTINGS_BY_TAG = (tag) => `${API_LISTINGS}?_tag=${tag}`;
-export const API_LISTINGS_PAGINATED = (limit, page) => `${API_LISTINGS}?limit=${limit}&page=${page}`;
+export const API_LISTINGS_PAGINATED = (limit, page) =>
+  `${API_LISTINGS}?limit=${limit}&page=${page}`;
 
 export const API_BID_ON_LISTING = (id) => `${API_LISTINGS}/${id}/bids`;
 export const API_PROFILE_BIDS = (name) => `${API_USER_PROFILE}${name}/bids`;
