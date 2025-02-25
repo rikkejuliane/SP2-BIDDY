@@ -47,7 +47,7 @@ function updateProfileUI(profile, isOwner) {
 
   // Avatar
   avatarElement.src =
-    profile.avatar?.url || "/public/images/default-avatar.jpg";
+    profile.avatar?.url || "/public/images/default-avatar.png";
 
   // Username & bio
   usernameElement.textContent = profile.name;

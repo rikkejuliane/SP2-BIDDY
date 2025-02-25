@@ -7,7 +7,6 @@ import { showOverlayModal } from "../../ui/global/modal.js";
  * @param {Object} profileData - The current user profile data.
  */
 export function openEditProfileModal(profileData) {
-  // Remove existing modal if one is already open
   const existingModal = document.getElementById("edit-profile-modal");
   if (existingModal) existingModal.remove();
 
