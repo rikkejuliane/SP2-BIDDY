@@ -6,16 +6,22 @@ import { readProfile } from "./read.js";
  */
 export async function loadProfile() {
   const urlParams = new URLSearchParams(window.location.search);
-  const profileUsername = urlParams.get("user"); // Get user from URL
+  const profileUsername = urlParams.get("user");
 
-  const { data: profileData, isOwner, error } = await readProfile(profileUsername); // ✅ Fetch profile
+  const {
+    data: profileData,
+    isOwner,
+    error,
+  } = await readProfile(profileUsername);
 
   if (error) {
-    document.getElementById("profile-info").innerHTML = `<p class='text-red-600'>${error}</p>`;
+    document.getElementById(
+      "profile-info"
+    ).innerHTML = `<p class='text-red-600'>${error}</p>`;
     return;
   }
 
-  updateProfileUI(profileData, isOwner); // ✅ Update UI
+  updateProfileUI(profileData, isOwner);
 }
 
 /**
@@ -30,27 +36,25 @@ function updateProfileUI(profile, isOwner) {
   const usernameElement = document.getElementById("profile-username");
   const bioElement = document.getElementById("profile-bio");
   const editButton = document.getElementById("edit-profile-btn");
-  const welcomeMessage = document.getElementById("welcome-message"); // ✅ Select the welcome message
+  const welcomeMessage = document.getElementById("welcome-message");
 
-  // ✅ Set banner (fallback to default)
-  bannerElement.style.backgroundImage = `url('${profile.banner?.url || "/public/images/default-banner.jpg"}')`;
+  // Banner
+  bannerElement.style.backgroundImage = `url('${
+    profile.banner?.url || "/public/images/default-banner.jpg"
+  }')`;
   bannerElement.style.backgroundSize = "cover";
   bannerElement.style.backgroundPosition = "center";
 
-  // ✅ Set avatar
-  avatarElement.src = profile.avatar?.url || "/public/images/default-avatar.jpg";
+  // Avatar
+  avatarElement.src =
+    profile.avatar?.url || "/public/images/default-avatar.jpg";
 
-  // ✅ Set username & bio
+  // Username & bio
   usernameElement.textContent = profile.name;
   bioElement.textContent = profile.bio || "This user has no bio.";
 
-  // ✅ Show "Edit Profile" button only if it's the logged-in user's profile
   editButton.classList.toggle("hidden", !isOwner);
-
-  // ✅ Hide "Welcome back!" for other users
   welcomeMessage.classList.toggle("hidden", !isOwner);
-
-  // ✅ Update stats dynamically
   updateProfileStats(profile);
 }
 
@@ -60,11 +64,13 @@ function updateProfileUI(profile, isOwner) {
  * @param {Object} profile - The profile data containing statistics.
  */
 function updateProfileStats(profile) {
-  document.getElementById("listings-count").textContent = `Listings: ${profile._count.listings || 0}`;
-  document.getElementById("wins-count").textContent = `Wins: ${profile._count.wins || 0}`;
-  
-  // ✅ Count bids manually (since _count.bids doesn't exist)
+  document.getElementById("listings-count").textContent = `Listings: ${
+    profile._count.listings || 0
+  }`;
+  document.getElementById("wins-count").textContent = `Wins: ${
+    profile._count.wins || 0
+  }`;
+
   const bidCount = profile.bids ? profile.bids.length : 0;
   document.getElementById("bids-count").textContent = `Bids: ${bidCount}`;
 }
-
