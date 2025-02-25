@@ -22,7 +22,9 @@ export async function login({ email, password }) {
 
   const json = await response.json();
   if (!response.ok) {
-    throw new Error(json.message || "Login failed. Please check your credentials.");
+    throw new Error(
+      json.message || "Login failed. Please check your credentials."
+    );
   }
 
   return json;

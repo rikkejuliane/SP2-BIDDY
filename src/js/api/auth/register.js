@@ -16,7 +16,11 @@ export async function register({ name, email, password }) {
 
     const json = await response.json();
     if (!response.ok) {
-      let errorMessage = json.errors?.[0]?.message || json.error || json.message || "Registration failed";
+      let errorMessage =
+        json.errors?.[0]?.message ||
+        json.error ||
+        json.message ||
+        "Registration failed";
       throw new Error(errorMessage);
     }
 
