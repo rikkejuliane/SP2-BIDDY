@@ -10,21 +10,28 @@
  * @param {number} totalPages - The total number of pages available.
  * @param {function} onPageChange - Callback function to handle page changes.
  */
-export function renderPagination(paginationContainerId, currentPage, totalPages, onPageChange) {
+export function renderPagination(
+  paginationContainerId,
+  currentPage,
+  totalPages,
+  onPageChange
+) {
   const paginationContainer = document.getElementById(paginationContainerId);
   if (!paginationContainer) {
-    console.error(`❌ Pagination container not found! (ID: ${paginationContainerId})`);
+    console.error(
+      `Pagination container not found! (ID: ${paginationContainerId})`
+    );
     return;
   }
 
-  paginationContainer.innerHTML = ""; // Clear old pagination
+  paginationContainer.innerHTML = "";
 
-  if (totalPages <= 1) return; // No pagination needed if only 1 page
+  if (totalPages <= 1) return;
 
-  // 🔹 Create Previous Button
   const prevButton = document.createElement("button");
   prevButton.innerHTML = "&lt;"; // `<` Arrow
-  prevButton.className = "px-3 py-4 text-royal-blue text-lg font-bold disabled:opacity-50";
+  prevButton.className =
+    "px-3 py-4 text-royal-blue text-lg font-bold disabled:opacity-50";
   prevButton.disabled = currentPage === 1;
   prevButton.addEventListener("click", () => {
     if (currentPage > 1) onPageChange(currentPage - 1);
@@ -32,7 +39,6 @@ export function renderPagination(paginationContainerId, currentPage, totalPages,
 
   paginationContainer.appendChild(prevButton);
 
-  // 🔹 Generate Page Numbers
   const pages = [];
   if (totalPages <= 5) {
     for (let i = 1; i <= totalPages; i++) pages.push(i);
@@ -46,7 +52,6 @@ export function renderPagination(paginationContainerId, currentPage, totalPages,
     pages.push(totalPages);
   }
 
-  // 🔹 Render Page Buttons
   pages.forEach((page) => {
     if (page === "...") {
       const ellipsis = document.createElement("span");
@@ -56,7 +61,9 @@ export function renderPagination(paginationContainerId, currentPage, totalPages,
     } else {
       const pageButton = document.createElement("button");
       pageButton.textContent = page;
-      pageButton.className = `px-3 py-4 text-lg font-bold ${page === currentPage ? "text-royal-blue" : "text-black"}`;
+      pageButton.className = `px-3 py-4 text-lg font-bold ${
+        page === currentPage ? "text-royal-blue" : "text-black"
+      }`;
       pageButton.addEventListener("click", () => {
         onPageChange(page);
       });
@@ -65,10 +72,10 @@ export function renderPagination(paginationContainerId, currentPage, totalPages,
     }
   });
 
-  // 🔹 Create Next Button
   const nextButton = document.createElement("button");
   nextButton.innerHTML = "&gt;"; // `>` Arrow
-  nextButton.className = "px-3 py-4 text-royal-blue text-lg font-bold disabled:opacity-50";
+  nextButton.className =
+    "px-3 py-4 text-royal-blue text-lg font-bold disabled:opacity-50";
   nextButton.disabled = currentPage === totalPages;
   nextButton.addEventListener("click", () => {
     if (currentPage < totalPages) onPageChange(currentPage + 1);
