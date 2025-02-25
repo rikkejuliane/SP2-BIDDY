@@ -7,11 +7,6 @@ import { loadListings } from "../../ui/post/loadListings.js";
 import { setupSearch } from "../../ui/post/search.js";
 import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js";
 
-
-
-const username = localStorage.getItem("username");
-console.log("Retrieved username:", username);
-
 authGuard();
 setLogoutListener();
 displayUserCredits();
@@ -21,23 +16,13 @@ setupLogoSwap();
 const listingsContainer = document.getElementById("listings-container");
 
 if (listingsContainer) {
-  console.log("✅ Listings container found!");
-
-  // ✅ Add and show the spinner
   const spinner = createLoadingSpinner();
   listingsContainer.appendChild(spinner);
-  spinner.classList.remove("hidden"); // ✅ Ensure it's visible
-  console.log("⏳ Spinner added inside listings container");
+  spinner.classList.remove("hidden");
 
-  // ✅ Load listings & hide spinner when done
   loadListings().finally(() => {
-    spinner.classList.add("hidden"); // ✅ Hide spinner when done
-    console.log("✅ Spinner hidden after loading listings.");
+    spinner.classList.add("hidden");
   });
 }
 
-// ✅ Initialize search AFTER the listings are loaded
 setupSearch();
-
-
-
