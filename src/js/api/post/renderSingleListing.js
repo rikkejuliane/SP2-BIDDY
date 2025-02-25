@@ -171,7 +171,7 @@ export function renderSingleListing(listing, isLoggedIn) {
   bidInput.placeholder = "Place your bid here...";
 
   const bidButton = document.createElement("button");
-  bidButton.className = "h-[36px] bg-royal-blue text-white font-serif font-bold text-base px-4 rounded flex items-center";
+  bidButton.className = "h-[36px] bg-royal-blue text-white font-serif font-bold text-sm sm:text-base px-4 rounded flex items-center";
 
 
   const user = localStorage.getItem("username");
