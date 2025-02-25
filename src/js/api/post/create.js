@@ -17,16 +17,19 @@ export async function createPost(listingData) {
       body: JSON.stringify(listingData),
     });
 
+    const result = await response.json(); // ✅ Parse response body
+
     if (!response.ok) {
-      throw new Error("Failed to create listing. Please try again.");
+      // ✅ If the API provides a detailed error message, show it
+      const errorMessage = result.errors ? result.errors.map(err => err.message).join(", ") : "Failed to create listing.";
+      throw new Error(errorMessage);
     }
 
-    const result = await response.json();
     showOverlayModal("🎉 Listing created successfully!");
     return result.data;
   } catch (error) {
     console.error("❌ Error creating listing:", error);
-    showOverlayModal("❌ Error creating listing. Please try again.");
+    showOverlayModal(`❌ ${error.message}`); // ✅ Show exact error to the user
     throw error;
   }
 }

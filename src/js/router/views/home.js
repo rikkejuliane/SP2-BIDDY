@@ -39,3 +39,5 @@ if (listingsContainer) {
 // ✅ Initialize search AFTER the listings are loaded
 setupSearch();
 
+
+
