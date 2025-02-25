@@ -13,7 +13,10 @@ export async function onCreatePost(event) {
   const description = form.elements.description.value.trim();
   const imageUrl = form.elements.imageUrl.value.trim();
   const imageAlt = form.elements.imageAlt.value.trim();
-  const tags = form.elements.tags.value.trim().split(",").map(tag => tag.trim());
+  const tags = form.elements.tags.value
+    .trim()
+    .split(",")
+    .map((tag) => tag.trim());
   const endsAt = new Date(form.elements.endsAt.value).toISOString();
 
   if (!title || !endsAt) {

@@ -21,7 +21,7 @@ export let filteredListings = []; // Store filtered listings globally
  */
 export async function loadListings() {
   const container = document.getElementById("listings-container");
-  if (!container) return console.error("❌ Listings container not found!");
+  if (!container) return console.error("Listings container not found!");
 
   try {
     let listings = [];
@@ -30,7 +30,9 @@ export async function loadListings() {
 
     // Fetch ALL listings, handling API pagination
     while (hasMore) {
-      const response = await fetch(`${API_AUCTION}/listings?_bids=true&_seller=true&limit=100&page=${page}`);
+      const response = await fetch(
+        `${API_AUCTION}/listings?_bids=true&_seller=true&limit=100&page=${page}`
+      );
       if (!response.ok) throw new Error("Failed to fetch listings");
 
       const result = await response.json();
@@ -38,12 +40,11 @@ export async function loadListings() {
 
       listings = [...listings, ...result.data];
       page++;
-      hasMore = result.data.length === 100; // If API returns 100 items, assume more exist
+      hasMore = result.data.length === 100;
     }
 
     if (listings.length === 0) throw new Error("No listings found.");
 
-    // Filter out broken posts (missing required data)
     allListings = listings
       .filter((listing) => {
         return (
@@ -59,20 +60,17 @@ export async function loadListings() {
           listing.tags.length > 0
         );
       })
-      .sort((a, b) => new Date(b.created) - new Date(a.created)); // Sort by newest first
+      .sort((a, b) => new Date(b.created) - new Date(a.created));
 
-    // Default to showing all listings
     filteredListings = [...allListings];
     totalPages = Math.ceil(filteredListings.length / ITEMS_PER_PAGE);
-    currentPage = 1; // Reset to first page
+    currentPage = 1;
 
-    renderPage(filteredListings); // Load first page with all listings
+    renderPage(filteredListings);
 
-    // Initialize tag filtering
     initTagFiltering(allListings, updateFilteredListings, setCurrentPage);
-
   } catch (error) {
-    console.error("❌ Error loading listings:", error);
+    console.error("Error loading listings:", error);
     container.innerHTML = `<p class="text-center text-red-600">Error loading listings.</p>`;
   }
 }
@@ -85,9 +83,9 @@ export async function loadListings() {
  * @param {Array} newListings - The filtered listings based on selected tags.
  */
 export function updateFilteredListings(newListings) {
-  filteredListings = [...newListings]; // Update global filtered listings
+  filteredListings = [...newListings];
   totalPages = Math.ceil(filteredListings.length / ITEMS_PER_PAGE);
-  currentPage = 1; // Reset to first page
+  currentPage = 1;
   renderPage(filteredListings);
 }
 
@@ -98,7 +96,7 @@ export function updateFilteredListings(newListings) {
  */
 export function setCurrentPage(newPage) {
   currentPage = newPage;
-  renderPage(filteredListings); // Ensure it only shows filtered listings
+  renderPage(filteredListings);
 }
 
 /**
@@ -113,7 +111,7 @@ export function renderPage(listingsToShow) {
   const container = document.getElementById("listings-container");
   if (!container) return;
 
-  container.innerHTML = ""; // Clear listings
+  container.innerHTML = "";
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -123,19 +121,23 @@ export function renderPage(listingsToShow) {
     container.innerHTML = `<p class="text-center text-gray-500">No valid listings available.</p>`;
   } else {
     listingsToDisplay.forEach((listing) => {
-      container.appendChild(renderListingCard(listing, Boolean(localStorage.getItem("token"))));
+      container.appendChild(
+        renderListingCard(listing, Boolean(localStorage.getItem("token")))
+      );
     });
   }
 
-  // ✅ Use the correct pagination ID for the homepage
-  renderPagination("pagination-container", currentPage, totalPages, (newPage) => {
-    setCurrentPage(newPage);
-  });
+  renderPagination(
+    "pagination-container",
+    currentPage,
+    totalPages,
+    (newPage) => {
+      setCurrentPage(newPage);
+    }
+  );
 
-  // ✅ Update total listings count dynamically
   const totalListingsElement = document.getElementById("total-listings-count");
   if (totalListingsElement) {
     totalListingsElement.textContent = filteredListings.length;
   }
 }
-
