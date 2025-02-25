@@ -6,9 +6,9 @@ export default async function router(pathname = window.location.pathname) {
     case "/":
       await import("./views/home.js");
       break;
-      case "/auth/":
-        await import("./views/auth.js");
-        break;
+    case "/auth/":
+      await import("./views/auth.js");
+      break;
     case "/post/":
       await import("./views/post.js");
       break;
@@ -21,11 +21,17 @@ export default async function router(pathname = window.location.pathname) {
     case "/profile/":
       await import("./views/profile.js");
       break;
-      case "/about/":   // Add this new case for the about page
+    case "/about/":
       await import("./views/about.js");
       break;
-      case "/about/story/":  // Add routing for Our Story
+    case "/about/story/":
       await import("./views/story.js");
+      break;
+    case "/terms/":
+      await import("./views/terms.js");
+      break;
+    case "/privacy/":
+      await import("./views/privacy.js");
       break;
     default:
       await import("./views/notFound.js");
