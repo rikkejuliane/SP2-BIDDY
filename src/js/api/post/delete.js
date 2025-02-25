@@ -13,6 +13,6 @@ export async function deletePost(id) {
   });
 
   if (!response.ok) {
-    throw new Error("❌ Failed to delete listing.");
+    throw new Error("Failed to delete listing.");
   }
 }

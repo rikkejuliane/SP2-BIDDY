@@ -15,7 +15,7 @@ export async function updatePost(id, updatedData) {
   });
 
   if (!response.ok) {
-    throw new Error("❌ Failed to update listing.");
+    throw new Error("Failed to update listing.");
   }
 
   return response.json();

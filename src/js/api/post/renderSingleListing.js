@@ -22,19 +22,20 @@ export function renderSingleListing(listing, isLoggedIn) {
   } = listing;
 
   const card = document.createElement("div");
-  card.className = "w-[500px] h-auto bg-white rounded-2xl shadow-lg overflow-hidden";
+  card.className =
+    "w-[500px] h-auto bg-white rounded-2xl shadow-lg overflow-hidden";
 
   // User Info
   const userInfo = document.createElement("div");
-userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
-userInfo.addEventListener("click", () => {
-  const loggedInUsername = localStorage.getItem("username");
-  if (seller.name === loggedInUsername) {
-    window.location.href = "/profile/";
-  } else {
-    window.location.href = `/profile/?user=${seller.name}`;
-  }
-});
+  userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
+  userInfo.addEventListener("click", () => {
+    const loggedInUsername = localStorage.getItem("username");
+    if (seller.name === loggedInUsername) {
+      window.location.href = "/profile/";
+    } else {
+      window.location.href = `/profile/?user=${seller.name}`;
+    }
+  });
 
   const avatar = document.createElement("img");
   avatar.src = seller?.avatar?.url || "/images/default-avatar.png";
@@ -56,7 +57,8 @@ userInfo.addEventListener("click", () => {
 
   // Tags & End Date
   const tagBar = document.createElement("div");
-  tagBar.className = "w-full h-[30px] bg-lavender-blue bg-opacity-50 flex justify-between items-center px-3 text-sm text-black";
+  tagBar.className =
+    "w-full h-[30px] bg-lavender-blue bg-opacity-50 flex justify-between items-center px-3 text-sm text-black";
 
   const tagSpan = document.createElement("span");
   tagSpan.className = "italic font-inter";
@@ -64,7 +66,9 @@ userInfo.addEventListener("click", () => {
 
   const endDate = document.createElement("span");
   endDate.className = "font-semibold font-inter";
-  endDate.textContent = `Bidding ends: ${new Date(endsAt).toLocaleDateString()}`;
+  endDate.textContent = `Bidding ends: ${new Date(
+    endsAt
+  ).toLocaleDateString()}`;
 
   tagBar.appendChild(tagSpan);
   tagBar.appendChild(endDate);
@@ -83,13 +87,15 @@ userInfo.addEventListener("click", () => {
 
   const createdDate = document.createElement("span");
   createdDate.className = "text-xs text-charcoal-grey font-bold";
-  createdDate.textContent = `Created: ${new Date(created).toLocaleDateString()}`;
+  createdDate.textContent = `Created: ${new Date(
+    created
+  ).toLocaleDateString()}`;
 
   details.appendChild(titleElement);
   details.appendChild(descriptionElement);
   details.appendChild(createdDate);
 
-  // ✅ Highest Bid Section
+  // Highest Bid Section
   const bidSummarySection = document.createElement("div");
   bidSummarySection.className = "w-[95%] p-3 flex flex-col mx-auto";
 
@@ -98,14 +104,17 @@ userInfo.addEventListener("click", () => {
 
   const highestBid = document.createElement("p");
   highestBid.className = "text-royal-blue font-bold text-lg";
-  highestBid.textContent = `Highest bid: $${bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0}`;
+  highestBid.textContent = `Highest bid: $${
+    bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0
+  }`;
 
   bidSummarySection.appendChild(highestBid);
   bidSummarySection.appendChild(hrTop);
 
-  // ✅ Bid History Section
+  // Bid History Section
   const bidHistorySection = document.createElement("div");
-  bidHistorySection.className = "w-[95%] p-3 flex flex-col mx-auto rounded-md font-inter";
+  bidHistorySection.className =
+    "w-[95%] p-3 flex flex-col mx-auto rounded-md font-inter";
 
   const bidHistoryTitle = document.createElement("h4");
   bidHistoryTitle.className = "text-md font-bold mb-2";
@@ -114,37 +123,40 @@ userInfo.addEventListener("click", () => {
   bidHistorySection.appendChild(bidHistoryTitle);
 
   if (bids.length > 0) {
-    const sortedBids = [...bids].sort((a, b) => b.amount - a.amount); // Sort highest to lowest
-    const highestBidAmount = sortedBids[0].amount; // Get the highest bid value
+    const sortedBids = [...bids].sort((a, b) => b.amount - a.amount);
+    const highestBidAmount = sortedBids[0].amount;
 
     sortedBids.forEach((bid) => {
       const bidEntry = document.createElement("div");
-      bidEntry.className = "flex justify-between items-center py-2"; // ✅ Removed border-b
+      bidEntry.className = "flex justify-between items-center py-2";
 
       const bidInfoWrapper = document.createElement("div");
       bidInfoWrapper.className = "flex items-center gap-2";
 
-      // ✅ Extract bidder details from bid
-      const bidderAvatarUrl = bid.bidder?.avatar?.url || "/images/default-avatar.png";
+      // Extract bidder details from bid
+      const bidderAvatarUrl =
+        bid.bidder?.avatar?.url || "/images/default-avatar.png";
       const bidderNameText = bid.bidder?.name || "Unknown User";
 
-      // ✅ Bidder Avatar
+      // Bidder Avatar
       const bidderAvatar = document.createElement("img");
       bidderAvatar.src = bidderAvatarUrl;
       bidderAvatar.alt = `${bidderNameText}'s avatar`;
       bidderAvatar.className = "w-8 h-8 rounded-full object-cover";
 
-      // ✅ Bidder Name (Highlight highest bidder)
+      // Bidder Name
       const bidderName = document.createElement("span");
-      bidderName.className = `font-semibold text-sm font-inter ${bid.amount === highestBidAmount ? "text-royal-blue font-bold" : ""
-        }`; // ✅ Highest bidder username is blue & bold
+      bidderName.className = `font-semibold text-sm font-inter ${
+        bid.amount === highestBidAmount ? "text-royal-blue font-bold" : ""
+      }`;
 
       bidderName.textContent = bidderNameText;
 
-      // ✅ Bid Amount (Only highest bid is blue)
+      // Bid Amount (Only highest bid is blue)
       const bidAmount = document.createElement("span");
-      bidAmount.className = `text-sm font-bold ${bid.amount === highestBidAmount ? "text-royal-blue" : "text-black"
-        }`;
+      bidAmount.className = `text-sm font-bold ${
+        bid.amount === highestBidAmount ? "text-royal-blue" : "text-black"
+      }`;
 
       bidAmount.textContent = `$${bid.amount}`;
 
@@ -175,43 +187,40 @@ userInfo.addEventListener("click", () => {
   const bidInput = document.createElement("input");
   bidInput.type = "number";
   bidInput.min = "1";
-  bidInput.className = "p-2 shadow-md rounded w-[200px] h-[36px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
+  bidInput.className =
+    "p-2 shadow-md rounded w-[200px] h-[36px] bg-lavender-blue bg-opacity-20 placeholder-charcoal-grey placeholder:font-inter placeholder:text-sm";
   bidInput.placeholder = "Place your bid here...";
 
   const bidButton = document.createElement("button");
-  bidButton.className = "h-[36px] bg-royal-blue text-white font-serif font-bold text-sm sm:text-base px-4 rounded flex items-center";
-
+  bidButton.className =
+    "h-[36px] bg-royal-blue text-white font-serif font-bold text-sm sm:text-base px-4 rounded flex items-center";
 
   const user = localStorage.getItem("username");
   const highestBidder =
     bids.length > 0
-      ? bids.reduce((maxBid, bid) => (bid.amount > maxBid.amount ? bid : maxBid), bids[0]).bidder.name
+      ? bids.reduce(
+          (maxBid, bid) => (bid.amount > maxBid.amount ? bid : maxBid),
+          bids[0]
+        ).bidder.name
       : "No bids";
-
-  console.log("Highest Bidder:", highestBidder);
-  console.log("Current User:", user);
 
   if (isLoggedIn) {
     bidButton.textContent = "Place Bid";
     bidButton.addEventListener("click", async () => {
       if (highestBidder === user) {
         showActionModal("You cannot place two bids in a row.", [
-          { text: "OK", onClick: () => { } }, // No additional action
+          { text: "OK", onClick: () => {} },
         ]);
-        console.log("User is the highest bidder. Blocking bid.");
         return;
       }
 
-      const bidAmount = parseFloat(bidInput.value); // Get the bid amount from the input
+      const bidAmount = parseFloat(bidInput.value);
 
-      // Call the new handleBidPlacement function only if allowed
       await handleBidPlacement(
         listing.id,
         bidAmount,
         bidInput,
-        () => {
-          // Success callback: Optionally refresh the listing or update the UI
-        },
+        () => {},
         (error) => {
           console.error(error);
         }
@@ -220,17 +229,14 @@ userInfo.addEventListener("click", () => {
   } else {
     bidButton.textContent = "Login to Bid";
     bidButton.addEventListener("click", () => {
-      window.location.href = "/auth/"; // Redirects to login page
+      window.location.href = "/auth/";
     });
   }
-
 
   bidInputWrapper.appendChild(bidInput);
   bidInputWrapper.appendChild(bidButton);
   bidSection.appendChild(hrBottom);
   bidSection.appendChild(bidInputWrapper);
-
-  // ✅ Append all elements to card
   card.appendChild(userInfo);
   card.appendChild(listingImage);
   card.appendChild(tagBar);

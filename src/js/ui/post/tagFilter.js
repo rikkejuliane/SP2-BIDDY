@@ -17,7 +17,7 @@ export function initTagFiltering(allListings) {
   if (!tagItems.length) return;
 
   // ✅ Store tags in order
-  const tags = Array.from(tagItems).map(tag => tag.getAttribute("data-tag"));
+  const tags = Array.from(tagItems).map((tag) => tag.getAttribute("data-tag"));
   let currentIndex = tags.indexOf("all"); // Default to "all"
 
   /**
@@ -29,10 +29,12 @@ export function initTagFiltering(allListings) {
     if (index < 0 || index >= tags.length) return;
 
     const activeTag = tags[index];
-    const activeTagItem = document.querySelector(`.tag-item[data-tag="${activeTag}"]`);
+    const activeTagItem = document.querySelector(
+      `.tag-item[data-tag="${activeTag}"]`
+    );
 
     // ✅ Remove active state from all tags
-    tagItems.forEach(tag => tag.classList.remove("active-tag"));
+    tagItems.forEach((tag) => tag.classList.remove("active-tag"));
 
     // ✅ Apply active state to the new selected tag
     if (activeTagItem) {
@@ -46,7 +48,11 @@ export function initTagFiltering(allListings) {
         const itemRect = activeTagItem.getBoundingClientRect();
 
         // Calculate scroll position so the active tag moves to the center
-        const scrollAmount = itemRect.left - containerRect.left - (containerRect.width / 2) + (itemRect.width / 2);
+        const scrollAmount =
+          itemRect.left -
+          containerRect.left -
+          containerRect.width / 2 +
+          itemRect.width / 2;
 
         // Scroll only the tag bar, not the whole page
         tagContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
@@ -92,9 +98,10 @@ export function initTagFiltering(allListings) {
 export function filterListingsByTag(tag, allListings) {
   if (!allListings || !Array.isArray(allListings)) return;
 
-  let newFilteredListings = tag === "all"
-    ? allListings
-    : allListings.filter(listing => listing.tags.includes(tag));
+  let newFilteredListings =
+    tag === "all"
+      ? allListings
+      : allListings.filter((listing) => listing.tags.includes(tag));
 
   updateFilteredListings(newFilteredListings);
 }
@@ -108,23 +115,32 @@ export function filterListingsByTag(tag, allListings) {
 function updateTagStyles(activeTag) {
   const allTags = document.querySelectorAll(".tag-item");
 
-  allTags.forEach(tag => {
+  allTags.forEach((tag) => {
     const svgPath = tag.querySelector("svg path");
     const text = tag.querySelector("p");
 
     if (svgPath) {
-      if (svgPath.hasAttribute("fill")) svgPath.setAttribute("fill", "#4E4E4E"); // Default
-      if (svgPath.hasAttribute("stroke")) svgPath.setAttribute("stroke", "#4E4E4E"); // Default
+      if (svgPath.hasAttribute("fill")) svgPath.setAttribute("fill", "#4E4E4E");
+      if (svgPath.hasAttribute("stroke"))
+        svgPath.setAttribute("stroke", "#4E4E4E");
     }
-    if (text) text.classList.remove("text-royal-blue", "border-b-4", "border-royal-blue", "pb-1");
+    if (text)
+      text.classList.remove(
+        "text-royal-blue",
+        "border-b-4",
+        "border-royal-blue",
+        "pb-1"
+      );
   });
 
   const activeSvgPath = activeTag.querySelector("svg path");
   const activeText = activeTag.querySelector("p");
 
   if (activeSvgPath) {
-    if (activeSvgPath.hasAttribute("fill")) activeSvgPath.setAttribute("fill", "#0017AD");
-    if (activeSvgPath.hasAttribute("stroke")) activeSvgPath.setAttribute("stroke", "#0017AD");
+    if (activeSvgPath.hasAttribute("fill"))
+      activeSvgPath.setAttribute("fill", "#0017AD");
+    if (activeSvgPath.hasAttribute("stroke"))
+      activeSvgPath.setAttribute("stroke", "#0017AD");
   }
   if (activeText) {
     activeText.classList.add(

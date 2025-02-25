@@ -6,11 +6,11 @@
  */
 export function createLoadingSpinner(id = "") {
   const spinner = document.createElement("div");
-  spinner.className = "loading-spinner hidden flex justify-center items-center"; // ✅ Keep consistent styling
+  spinner.className = "loading-spinner hidden flex justify-center items-center";
   spinner.setAttribute("role", "status");
 
   if (id) {
-    spinner.id = id; // ✅ Allows setting a unique ID if needed
+    spinner.id = id;
   }
 
   spinner.innerHTML = `

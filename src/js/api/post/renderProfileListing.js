@@ -36,8 +36,8 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
   const isExpired = currentDate > listingEndDate;
 
   if (isExpired) {
-    card.style.opacity = "0.5"; // Set opacity to 50%
-    card.style.pointerEvents = "none"; // Disable interactions
+    card.style.opacity = "0.5";
+    card.style.pointerEvents = "none";
   }
 
   function goToListingPage() {
@@ -53,16 +53,16 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
     }
   }
 
-  // ✅ Listing Image (Rounded Top for Bids)
+  // Listing Image
   const listingImage = document.createElement("img");
   listingImage.src = media?.[0]?.url || "/images/placeholder.png";
   listingImage.alt = title;
   listingImage.className = `w-[350px] h-[256px] object-cover cursor-pointer ${
     bid ? "rounded-t-2xl" : ""
-  }`; // ✅ Rounded top for bid listings
+  }`;
   listingImage.addEventListener("click", goToListingPage);
 
-  // ✅ User Info (Avatar + Username) (REMOVE if it's a bid listing)
+  // User Info
   if (!bid) {
     const userInfo = document.createElement("div");
     userInfo.className = "flex items-center gap-2 p-3 cursor-pointer";
@@ -82,7 +82,7 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
     card.appendChild(userInfo);
   }
 
-  // ✅ Tags & End Date
+  // Tags & End Date
   const tagBar = document.createElement("div");
   tagBar.className =
     "w-full h-[25px] bg-lavender-blue bg-opacity-50 flex justify-between items-center px-3 text-sm text-black";
@@ -100,7 +100,7 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
   tagBar.appendChild(tagSpan);
   tagBar.appendChild(endDate);
 
-  // ✅ Title & Description
+  // Title & Description
   const details = document.createElement("div");
   details.className = "w-[95%] p-2 flex justify-center flex-col mx-auto";
 
@@ -124,7 +124,7 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
   details.appendChild(descriptionElement);
   details.appendChild(createdDate);
 
-  // ✅ Bids & Button
+  // Bids & Button
   const bidSection = document.createElement("div");
   bidSection.className = "w-[95%] p-2 flex justify-center flex-col mx-auto";
 
@@ -150,7 +150,7 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
       });
     }
   } else {
-    bidButton.classList.add("hidden"); // ✅ Hide bid button if expired
+    bidButton.classList.add("hidden");
   }
 
   if (bid) {
@@ -159,13 +159,12 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
 
     const yourCurrentBid = document.createElement("span");
     yourCurrentBid.className = "text-black font-inter";
-    yourCurrentBid.textContent = "You bid: "; // ✅ Keeps existing styling, only adding Inter
+    yourCurrentBid.textContent = "You bid: ";
 
     const bidAmount = document.createElement("span");
     bidAmount.className = "text-royal-blue font-bold";
-    bidAmount.textContent = `${highestBid}$`; // ✅ Keeps $ sign at the end
+    bidAmount.textContent = `${highestBid}$`;
 
-    // ✅ Append both elements in the correct order
     yourCurrentBid.appendChild(bidAmount);
     bidInfo.appendChild(yourCurrentBid);
     bidSection.appendChild(emptyInfo);
@@ -187,8 +186,7 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
   bidInfo.appendChild(bidButton);
   bidSection.appendChild(bidInfo);
 
-  // ✅ Append all elements to card
-  card.appendChild(listingImage); // ✅ Image first (for rounded top)
+  card.appendChild(listingImage);
   card.appendChild(tagBar);
   card.appendChild(details);
   card.appendChild(bidSection);
@@ -208,8 +206,7 @@ export function renderProfileListingCard(listing, isLoggedIn, bid) {
       "bg-cardinal-red text-white font-serif font-bold text-base px-3 py-1 rounded";
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", () => onDeletePost(id));
-    
-    // ✅ Append Buttons
+
     editSection.appendChild(editButton);
     editSection.appendChild(deleteButton);
     card.appendChild(editSection);

@@ -9,7 +9,11 @@ import { API_KEY } from "./constants";
  * @param {boolean} [options.contentType=true] - Whether to include the Content-Type header.
  * @returns {Headers} A Headers object with the appropriate settings.
  */
-export function headers({ apiKey = true, authToken = true, contentType = true } = {}) {
+export function headers({
+  apiKey = true,
+  authToken = true,
+  contentType = true,
+} = {}) {
   const headers = new Headers();
 
   if (apiKey) {

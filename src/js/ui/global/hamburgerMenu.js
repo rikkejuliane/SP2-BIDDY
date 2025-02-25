@@ -16,22 +16,23 @@ export function setupHamburgerMenu() {
   if (!menuIcon) return;
 
   menuIcon.addEventListener("click", () => {
-    menuIcon.classList.toggle("open"); // Toggle the X animation
+    menuIcon.classList.toggle("open");
     toggleMenu();
   });
 
   /**
-  * Toggles the hamburger menu's visibility and updates UI elements dynamically.
-  * Adds/removes the menu from the DOM if it does not exist.
-  *
-  * @function toggleMenu
-  * @returns {void}
-  */
+   * Toggles the hamburger menu's visibility and updates UI elements dynamically.
+   * Adds/removes the menu from the DOM if it does not exist.
+   *
+   * @function toggleMenu
+   * @returns {void}
+   */
   function toggleMenu() {
     if (!menu) {
       menu = document.createElement("div");
       menu.id = "mobile-menu";
-      menu.className = "fixed top-0 right-0 w-full h-auto bg-cloud-grey p-6 shadow-lg z-50 transition-transform duration-300 translate-x-full";
+      menu.className =
+        "fixed top-0 right-0 w-full h-auto bg-cloud-grey p-6 shadow-lg z-50 transition-transform duration-300 translate-x-full";
       menu.innerHTML = `
             <ul class="font-inter font-bold text-charcoal-grey text-lg space-y-4 pt-16">
                 <li id="hamburger-credits" class="flex justify-center items-center">Credits: <span class="text-royal-blue">$0</span></li>
@@ -49,21 +50,18 @@ export function setupHamburgerMenu() {
     const isMenuOpen = menu.classList.contains("translate-x-0");
 
     if (isMenuOpen) {
-      // Close menu
       menu.classList.add("translate-x-full");
       menu.classList.remove("translate-x-0");
-      menuIcon.classList.remove("open"); // Reset animation
+      menuIcon.classList.remove("open");
     } else {
-      // Open menu
       menu.classList.add("translate-x-0");
       menu.classList.remove("translate-x-full");
-      menuIcon.classList.add("open"); // Trigger animation
+      menuIcon.classList.add("open");
     }
 
     displayUserCredits();
     setLogoutListener();
 
-    // ✅ Ensures clicking outside closes it every time
     document.addEventListener("click", (event) => {
       if (!menu.contains(event.target) && event.target !== menuIcon) {
         menu.classList.add("translate-x-full");
