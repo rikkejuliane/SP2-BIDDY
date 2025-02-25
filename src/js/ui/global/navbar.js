@@ -39,8 +39,11 @@ export function updateNavbar() {
     if (!isLoggedIn) {
         navbarHTML += `
             <div class="flex justify-center mt-3">
-                <a href="/auth/" class="bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded w-[100px] h-[30px] flex items-center justify-center">
-                    Login
+                <a href="/auth/" class="bg-royal-blue text-white text-lg font-serif font-bold p-2 rounded sm:w-[100px] sm:h-[30px] w-10 h-10 flex items-center justify-center mx-auto">
+                    <span class="hidden sm:block">Login</span> 
+                    <svg class="w-6 h-6 sm:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-7.5A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h7.5a2.25 2.25 0 002.25-2.25V15m-3-3h8.25m0 0l-3-3m3 3l-3 3"/>
+                    </svg>
                 </a>
             </div>
         `;
