@@ -3,15 +3,13 @@
 
 
 ## Table of Contents 📚  
-1. [Project Overview](#project-overview-)  
-2. [Client](#client-)  
-3. [Demo](#demo-)  
-4. [Key Features](#key-features-) 
-5. [Installation](#installation-) 
-6. [Usage](#usage-) 
-7. [Tech Used](#tech-used-) 
-8. [Contact Me](#contact-me-)
-9. [Other](#other-)
+1. [Project Overview](#project-overview-)   
+2. [Demo](#demo-)  
+3. [Key Features](#key-features-)
+4. [Tech Used](#tech-used-) 
+5. [Installation](#installation-)  
+6. [Contact Me](#contact-me-)
+7. [Other](#other-)
 
 ## Project Overview 🌍   
 Biddy is an auction platform where users can list items for bidding and place bids on other users' listings. Users start with 1000 credits, which they can use to bid or earn by selling items. The platform is designed to be user-friendly, accessible, and fully responsive.  
@@ -20,6 +18,14 @@ This project is developed as part of the Semester Project 2 for Noroff, demonstr
 
 
 ## Live demo 🎥    
+**Index page:**
+![Index demo](https://github.com/user-attachments/assets/f3addc29-92d8-4d13-aab8-024595e6f74f)  
+
+**Profile:**
+![profile demo](https://github.com/user-attachments/assets/458263c9-61ff-48d5-938b-1a57b46e7293)
+
+**Authentication:**
+![auth demo](https://github.com/user-attachments/assets/d6a9b6b1-ee51-495e-a72d-3af03eab9736) 
 
 
 ## Key Features ✨    
