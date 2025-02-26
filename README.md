@@ -92,5 +92,11 @@ VITE_API_BASE=your-base-here
 The base is the url of the api: https://v2.api.noroff.dev  
 You can get your API key here: Noroff API Key Documentation.  
 
+**5. Start the development server:**
+```bash
+npm run dev
+```
 
+**6. Open the project:**
+The application will be accessible at http://localhost:5173/ in your preferred web browser.
 
