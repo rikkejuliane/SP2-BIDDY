@@ -11,7 +11,7 @@ This project is developed as part of the Semester Project 2 for Noroff, demonstr
 ## Live demo 🎥    
 
 ## Key Features ✨    
-**User Authentication:**  
+**User Authentication:**
 * Register with a stud.noroff.no email  
 * Login/logout functionality  
 
