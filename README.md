@@ -89,7 +89,7 @@ and add your API base:
 VITE_API_BASE=your-base-here
 ```
 
-The base is the url of the api: https://v2.api.noroff.dev  
+The base is the url of the api: (https://v2.api.noroff.dev)[https://v2.api.noroff.dev] 
 You can get your API key here: Noroff API Key Documentation.  
 
 **5. Start the development server:**
