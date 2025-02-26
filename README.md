@@ -10,7 +10,8 @@
 5. [Installation](#installation-) 
 6. [Usage](#usage-) 
 7. [Tech Used](#tech-used-) 
-8. [Contact Me](#contact-me-) 
+8. [Contact Me](#contact-me-)
+9. [Other](#other-)
 
 ## Project Overview 🌍   
 Biddy is an auction platform where users can list items for bidding and place bids on other users' listings. Users start with 1000 credits, which they can use to bid or earn by selling items. The platform is designed to be user-friendly, accessible, and fully responsive.  
@@ -111,10 +112,17 @@ npm run dev
 ```
 
 **6. Open the project:**
-The application will be accessible at http://localhost:5173/ in your preferred web browser.
+The application will be accessible at http://localhost:5173/ in your preferred web browser.  
 
 
 ## Contact me 🙋🏽‍♀️  
 Don’t hesitate to reach out to me or connect with me on social media if you have any questions, collaboration ideas, or an exciting new project in mind. I’m always open to new opportunities!   
 🩷 [Instagram](https://www.instagram.com/rikkejuliane/)  
 💙 [Linkedin](https://www.linkedin.com/in/rikkejuliane/)  
+
+
+## Other 📌  
+**Gantt Chart:** [View the timeline](https://github.com/users/rikkejuliane/projects/4/views/4)  
+**Figma wireframes:** [View wireframes](https://www.figma.com/design/fNR6E8ekUupJbTT0VyehOK/SP2---BIDDY?node-id=158-2917&t=spsQtI6Mz9Os0l3K-1)  
+**GitHub Kanban Board:** [View the board](https://github.com/users/rikkejuliane/projects/4/views/1)  
+**Style Guide:** [View the styleguide](https://www.figma.com/design/fNR6E8ekUupJbTT0VyehOK/SP2---BIDDY?node-id=0-1)  
