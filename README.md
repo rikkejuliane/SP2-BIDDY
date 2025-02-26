@@ -18,13 +18,13 @@ This project is developed as part of the Semester Project 2 for Noroff, demonstr
 
 
 ## Live demo 🎥    
-**Index page:**
+**Index page:**  
 ![Index demo](https://github.com/user-attachments/assets/f3addc29-92d8-4d13-aab8-024595e6f74f)  
 
-**Profile:**
+**Profile:**  
 ![profile demo](https://github.com/user-attachments/assets/458263c9-61ff-48d5-938b-1a57b46e7293)
 
-**Authentication:**
+**Authentication:**  
 ![auth demo](https://github.com/user-attachments/assets/d6a9b6b1-ee51-495e-a72d-3af03eab9736) 
 
 
