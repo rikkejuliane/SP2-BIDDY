@@ -11,7 +11,7 @@ This project is developed as part of the Semester Project 2 for Noroff, demonstr
 ## Live demo 🎥    
 
 ## Key Features ✨    
-**User Authentication:**
+**User Authentication:**  
 * Register with a stud.noroff.no email  
 * Login/logout functionality  
 
@@ -20,3 +20,46 @@ This project is developed as part of the Semester Project 2 for Noroff, demonstr
 * Set a bidding deadline
 * Add media and descriptions  
 * View highest bid and total bids 
+
+**Bidding System:**  
+* Users can place bids on active auctions
+* View bid history with avatars and usernames
+* Prevents users from bidding against themselves
+
+**Dynamic UI Elements:**  
+* Search Bar: Filter listings in real-time
+* Tag Bar: Display categories with icons
+* Logged In vs Logged Out Views
+* Responsive Design: Works on all screen sizes
+
+**Admin Functionality:**
+* Single authentication page for login and registration with animations
+* Secure profile editing and listing management
+
+**Accessibility & WCAG Compliance:**  
+* Uses semantic HTML for better screen reader compatibility
+* Ensures contrast and readability with tools like WAVE
+* Responsive UI optimized for all devices
+
+## Tech Used 💻 
+* HTML5
+* Tailwind CSS
+* CSS
+* Vite
+* Prettier
+* IconScout (for icons)
+* Netlify
+* RESTful API (Nofoff)
+
+## Installation ⚙️
+Click the link to access the project: 🔗 [Biddy](https://biddy-sp2.netlify.app/)
+
+To set up the project locally, follow these steps:
+**1. Clone the repository:**
+```bash
+git clone https://github.com/rikkejuliane/SP2-BIDDY.git
+  
+**2. Navigate to the project directory:**
+
+
+
