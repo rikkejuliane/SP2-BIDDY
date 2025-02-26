@@ -77,9 +77,9 @@ Copy the .env_template File:
 cp .env
 ```
 
-Add Your API Key:
-Open the newly created .env file in your code editor.
-Add your API key in place of your-api-key-here:
+Add Your API Key:  
+Open the newly created .env file in your code editor.  
+Add your API key in place of your-api-key-here:  
 ```bash
 VITE_API_KEY=your-api-key-here
 ```
@@ -89,8 +89,8 @@ and add your API base:
 VITE_API_BASE=your-base-here
 ```
 
-The base is the url of the api: https://v2.api.noroff.dev
-You can get your API key here: Noroff API Key Documentation.
+The base is the url of the api: https://v2.api.noroff.dev  
+You can get your API key here: Noroff API Key Documentation.  
 
 
 
