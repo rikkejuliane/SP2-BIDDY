@@ -1,6 +1,6 @@
 import { API_LISTING_SINGLE } from "../../api/constants.js";
 import { renderSingleListing } from "../../api/post/renderSingleListing.js";
-import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js"; // ✅ Import the spinner
+import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js";
 
 /**
  * Fetches and displays a single listing based on the listing ID from the URL parameters.
@@ -9,7 +9,10 @@ import { createLoadingSpinner } from "../../ui/global/loadingSpinner.js"; // ✅
  */
 export async function loadSingleListing() {
   const container = document.getElementById("single-listing-container");
-  if (!container) return console.error("Single listing container not found!");
+  if (!container) {
+    console.error("Single listing container not found!");
+    return;
+  }
 
   const urlParams = new URLSearchParams(window.location.search);
   const listingId = urlParams.get("id");

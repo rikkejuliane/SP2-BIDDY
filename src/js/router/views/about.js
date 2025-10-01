@@ -9,5 +9,3 @@ setLogoutListener();
 displayUserCredits();
 updateNavbar();
 setupLogoSwap();
-
-
