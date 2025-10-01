@@ -1,4 +1,4 @@
-import { API_USER_PROFILE, API_PROFILE_BIDS } from "../constants.js"; // ✅ Import API routes
+import { API_USER_PROFILE, API_PROFILE_BIDS } from "../constants.js";
 import { headers } from "../headers.js";
 
 /**
@@ -46,7 +46,9 @@ export async function readProfile(username) {
         const bidsResult = await bidsResponse.json();
         bidsData = bidsResult.data || [];
       }
-    } catch {}
+    } catch (error) {
+      console.error("Error fetching bids:", error);
+    }
 
     return {
       data: { ...result.data, bids: bidsData },

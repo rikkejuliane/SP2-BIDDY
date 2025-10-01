@@ -1,5 +1,5 @@
-import { API_BID_ON_LISTING } from "../constants.js"; // Import the API endpoint constant
-import { headers } from "../headers.js"; // Import the headers function
+import { API_BID_ON_LISTING } from "../constants.js";
+import { headers } from "../headers.js";
 import { showOverlayModal, showActionModal } from "../../ui/global/modal.js";
 
 /**
@@ -44,7 +44,7 @@ export async function handleBidPlacement(listingId, bidAmount) {
     showActionModal("Please enter a valid bid amount.", [
       {
         text: "OK",
-        onClick: () => {},
+        onClick: () => { },
       },
     ]);
     return;
@@ -62,10 +62,10 @@ export async function handleBidPlacement(listingId, bidAmount) {
     if (error.errors && error.errors.length > 0) {
       errorMessage = error.errors[0].message;
     }
-    showActionModal("Failed to place bid: " + errorMessage, [
+    showActionModal(`Failed to place bid: ${errorMessage}`, [
       {
         text: "OK",
-        onClick: () => {},
+        onClick: () => { },
       },
     ]);
   }
