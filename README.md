@@ -63,6 +63,7 @@ This project is developed as part of the Semester Project 2 for Noroff, demonstr
 ## Tech Used 💻 
 * HTML5
 * Tailwind CSS
+* Vanilla JavaScript
 * CSS
 * Vite
 * Prettier
