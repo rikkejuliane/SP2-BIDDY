@@ -1,5 +1,5 @@
 import { handleBidPlacement } from "./placeBid";
-import { showActionModal, showOverlayModal } from "../../ui/global/modal";
+import { showActionModal } from "../../ui/global/modal";
 
 /**
  * Renders a single listing card element.
